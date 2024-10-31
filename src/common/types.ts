@@ -19,24 +19,31 @@ export interface Factor {
 }
 
 export enum ArmorPieces {
-  ARMS,
-  BODY,
-  GROIN,
-  HANDS,
-  EYES,
-  LEGS,
-  TORSO,
-  FACE,
-  LIMBS,
-  FEET,
-  NECK,
-  FULL_SUIT,
-  SKULL
+  ALL = 'All',
+  HEAD = 'Head',
+  BODY = 'Body',
+  ARMS = 'Arms',
+  LEGS = 'Legs',
+  HANDS = 'Hands',
+  FEET = 'Feet'
 }
 
+// Includes shields in this homebrew as a straight DR item
 export interface Armor extends Factor {
   dr: number;
   pieces: ArmorPieces[];
+}
+
+export enum AdvantageType {
+  ADVANTAGE = 'Advantage',
+  PERK = 'Perk',
+  QUIRK = 'Quirk',
+  DISADVANTAGE = 'Disadvantage'
+}
+
+export enum SkillType {
+  SKILL = 'Skill',
+  SPELL = 'Spell'
 }
 
 export interface Character {

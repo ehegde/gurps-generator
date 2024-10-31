@@ -22,7 +22,7 @@ export default function AttributesBlock() {
         <ColumnLayout columns={2} variant="text-grid">
           <ColumnLayout columns={2}>
             <div>
-              <Box variant="awsui-key-label">ST</Box>
+              <Box variant="awsui-key-label">ST (Points: 0)</Box>
               <Input
                 onChange={({ detail }) => setValue(detail.value)}
                 value={value}
@@ -30,7 +30,7 @@ export default function AttributesBlock() {
               />
             </div>
             <div>
-              <Box variant="awsui-key-label">HT</Box>
+              <Box variant="awsui-key-label">HT (Points: 0)</Box>
               <Input
                 onChange={({ detail }) => setValue(detail.value)}
                 value={value}
@@ -40,7 +40,7 @@ export default function AttributesBlock() {
           </ColumnLayout>
           <ColumnLayout columns={2}>
             <div>
-              <Box variant="awsui-key-label">DX</Box>
+              <Box variant="awsui-key-label">DX (Points: 0)</Box>
               <Input
                 onChange={({ detail }) => setValue(detail.value)}
                 value={value}
@@ -48,7 +48,7 @@ export default function AttributesBlock() {
               />
             </div>
             <div>
-              <Box variant="awsui-key-label">IQ</Box>
+              <Box variant="awsui-key-label">IQ (Points: 0)</Box>
               <Input
                 onChange={({ detail }) => setValue(detail.value)}
                 value={value}

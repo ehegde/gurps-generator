@@ -4,26 +4,6 @@ import RouterButtonDropdown from "../../components/wrappers/router-button-dropdo
 
 export default function DashboardHeader() {
   return (
-    <Header
-      variant="h1"
-      actions={
-        <SpaceBetween direction="horizontal" size="xs">
-          <RouterButton href="/section1">View Items</RouterButton>
-          <RouterButtonDropdown
-            items={[
-              {
-                id: "add-data",
-                text: "Add Item",
-                href: "/section1/add",
-              },
-            ]}
-          >
-            Add data
-          </RouterButtonDropdown>
-        </SpaceBetween>
-      }
-    >
-      Character Creator
-    </Header>
+    <Header variant="h1">Character Creator</Header>
   );
 }
