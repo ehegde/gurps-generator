@@ -126,8 +126,7 @@ export default function SkillsBlock() {
               <Button>Delete</Button>
             </SpaceBetween>
           }>
-            <Icon name="suggestions"></Icon>
-              Skills and Spells
+            <Icon name="suggestions"></Icon> Skills and Spells
           </Header>
       }
     />

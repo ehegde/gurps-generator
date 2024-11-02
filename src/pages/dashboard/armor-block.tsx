@@ -105,8 +105,7 @@ export default function ArmorBlock() {
               <Button>Delete</Button>
             </SpaceBetween>
           }>
-            <Icon name="treeview-expand"></Icon>
-              Armor and Shields
+            <Icon name="treeview-expand"></Icon> Armor and Shields
           </Header>
       }
     />

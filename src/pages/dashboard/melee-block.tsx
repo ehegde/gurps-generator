@@ -140,8 +140,7 @@ export default function MeleeBlock() {
               <Button>Delete</Button>
             </SpaceBetween>
           }>
-            <Icon name="flag"></Icon>
-              Melee Weapons
+            <Icon name="flag"></Icon> Melee Weapons
           </Header>
       }
     />

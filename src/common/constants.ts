@@ -28,7 +28,7 @@ export const DEFAULT_CHARACTER: Character = {
     speedMod: 0,
     moveMod: 0,
     sizeMod: 0,
-    magicalAptitude: 0
+    mageryBonus: 0
   },
   advantages: [],
   reactions: [],
@@ -36,4 +36,64 @@ export const DEFAULT_CHARACTER: Character = {
   items: [],
   meleeWeapons: [],
   skills: []
+};
+
+export const DAMAGE_TABLE: {
+  [st: number]: {
+    th: string;
+    sw: string;
+  }
+} = {
+  1: { th: "1d-6", sw: "1d-5" },
+  2: { th: "1d-6", sw: "1d-5" },
+  3: { th: "1d-5", sw: "1d-4" },
+  4: { th: "1d-5", sw: "1d-4" },
+  5: { th: "1d-4", sw: "1d-3" },
+  6: { th: "1d-4", sw: "1d-3" },
+  7: { th: "1d-3", sw: "1d-2" },
+  8: { th: "1d-3", sw: "1d-2" },
+  9: { th: "1d-2", sw: "1d-1" },
+  10: { th: "1d-2", sw: "1d" },
+  11: { th: "1d-1", sw: "1d+1" },
+  12: { th: "1d-1", sw: "1d+2" },
+  13: { th: "1d", sw: "2d-1" },
+  14: { th: "1d", sw: "2d" },
+  15: { th: "1d+1", sw: "2d+1" },
+  16: { th: "1d+1", sw: "2d+2" },
+  17: { th: "1d+2", sw: "3d-1" },
+  18: { th: "1d+2", sw: "3d" },
+  19: { th: "2d-1", sw: "3d+1" },
+  20: { th: "2d-1", sw: "3d+2" },
+  21: { th: "2d", sw: "4d-1" },
+  22: { th: "2d", sw: "4d" },
+  23: { th: "2d+1", sw: "4d+1" },
+  24: { th: "2d+1", sw: "4d+2" },
+  25: { th: "2d+2", sw: "5d-1" },
+  26: { th: "2d+2", sw: "5d" },
+  27: { th: "3d-1", sw: "5d+1" },
+  28: { th: "3d-1", sw: "5d+1" },
+  29: { th: "3d", sw: "5d+2" },
+  30: { th: "3d", sw: "5d+2" },
+  31: { th: "3d+1", sw: "6d-1" },
+  32: { th: "3d+1", sw: "6d-1" },
+  33: { th: "3d+2", sw: "6d" },
+  34: { th: "3d+2", sw: "6d" },
+  35: { th: "4d-1", sw: "6d+1" },
+  36: { th: "4d-1", sw: "6d+1" },
+  37: { th: "4d", sw: "6d+2" },
+  38: { th: "4d", sw: "6d+2" },
+  39: { th: "4d+1", sw: "7d-1" },
+  40: { th: "4d+1", sw: "7d-1" },
+  45: { th: "5d", sw: "7d+1" },
+  50: { th: "5d+2", sw: "8d-1" },
+  55: { th: "6d", sw: "8d+1" },
+  60: { th: "7d-1", sw: "9d" },
+  65: { th: "7d+1", sw: "9d+2" },
+  70: { th: "8d", sw: "10d" },
+  75: { th: "8d+2", sw: "10d+2" },
+  80: { th: "9d", sw: "11d" },
+  85: { th: "9d+2", sw: "11d+2" },
+  90: { th: "10d", sw: "12d" },
+  95: { th: "10d+2", sw: "12d+2" },
+  100: { th: "11d", sw: "13d" }
 };

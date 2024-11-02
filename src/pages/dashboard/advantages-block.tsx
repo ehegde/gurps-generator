@@ -106,8 +106,7 @@ export default function AdvantagesBlock() {
             </SpaceBetween>
           }>
             <Icon name="caret-up-filled"></Icon>
-            <Icon name="caret-down-filled"></Icon>
-              Advantages, Disadvantages, Perks, Quirks
+            <Icon name="caret-down-filled"></Icon> Advantages, Disadvantages, Perks, Quirks
           </Header>
       }
     />

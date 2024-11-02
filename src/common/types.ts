@@ -63,7 +63,8 @@ export enum AdvantageType {
   ADVANTAGE = 'Advantage',
   PERK = 'Perk',
   QUIRK = 'Quirk',
-  DISADVANTAGE = 'Disadvantage'
+  DISADVANTAGE = 'Disadvantage',
+  ADJUSTER = 'Adjuster' // for correcting values outside of the assumptions of this program
 }
 
 export enum SkillType {

@@ -10,10 +10,14 @@ import {
   Table,
   Link,
   SpaceBetween,
+  Popover,
+  StatusIndicator,
 } from "@cloudscape-design/components";
 import React from "react";
 import { BlockProps } from "../../common/types";
 import { produce } from "immer";
+import { dmgModPoints, dxPoints, hpModPoints, htPoints, iqPoints, moveModPoints, perModPoints, speedModPoints, stPoints, willModPoints } from "../../common/helpers/character-points";
+import { calcDmg } from "../../common/helpers/character-outputs";
 
 export default function AttributesBlock(props: BlockProps) {
   const [value, setValue] = React.useState("");
@@ -24,7 +28,7 @@ export default function AttributesBlock(props: BlockProps) {
         <ColumnLayout columns={2} variant="text-grid">
           <ColumnLayout columns={2}>
             <div>
-              <Box variant="awsui-key-label">ST (Points: 0)</Box>
+              <Box variant="awsui-key-label">ST (Points: {stPoints(props.character.atts.st)})</Box>
               <Input
                 onChange={({ detail }) => props.setCharacter(
                   produce(props.character, next => {
@@ -37,7 +41,7 @@ export default function AttributesBlock(props: BlockProps) {
               />
             </div>
             <div>
-              <Box variant="awsui-key-label">HT (Points: 0)</Box>
+              <Box variant="awsui-key-label">HT (Points: {htPoints(props.character.atts.ht)})</Box>
               <Input
                 onChange={({ detail }) => props.setCharacter(
                   produce(props.character, next => {
@@ -52,7 +56,7 @@ export default function AttributesBlock(props: BlockProps) {
           </ColumnLayout>
           <ColumnLayout columns={2}>
             <div>
-              <Box variant="awsui-key-label">DX (Points: 0)</Box>
+              <Box variant="awsui-key-label">DX (Points: {dxPoints(props.character.atts.dx)})</Box>
               <Input
                 onChange={({ detail }) => props.setCharacter(
                   produce(props.character, next => {
@@ -65,7 +69,7 @@ export default function AttributesBlock(props: BlockProps) {
               />
             </div>
             <div>
-              <Box variant="awsui-key-label">IQ (Points: 0)</Box>
+              <Box variant="awsui-key-label">IQ (Points: {iqPoints(props.character.atts.iq)})</Box>
               <Input
                 onChange={({ detail }) => props.setCharacter(
                   produce(props.character, next => {
@@ -92,7 +96,15 @@ export default function AttributesBlock(props: BlockProps) {
             {
               id: "name",
               header: "Characteristic",
-              cell: item => item.name || "-",
+              cell: item =>
+                <div>
+                  {item.alert ?
+                    <Popover header="Info" content={item.alert}>
+                      <StatusIndicator type="info" />
+                    </Popover> : <></>
+                  }
+                  {item.name}
+                </div>,
               isRowHeader: true
             },
             {
@@ -100,8 +112,9 @@ export default function AttributesBlock(props: BlockProps) {
               header: "Modifier",
               cell: item => (
                 <Input
-                  onChange={({ detail }) => setValue(detail.value)}
-                  value={value}
+                  onChange={({ detail }) => item.updater(Number(detail.value))}
+                  value={`${item.att}`}
+                  type="number"
                   placeholder="10"
                 />
               )
@@ -109,63 +122,80 @@ export default function AttributesBlock(props: BlockProps) {
             {
               id: "cost",
               header: "Point Cost",
-              cell: item => `${item.cost}` || "-"
+              cell: item => item.cost ? item.cost(item.att) : "-"
             },
             {
               id: "result",
               header: "Result Value",
-              cell: item => item.result ?? "-"
+              cell: item => item.result ? `${item.result()}` : "-"
             }
           ]}
           enableKeyboardNavigation
           items={[
             {
               name: "DMG (ST) - Thrust / Swing",
-              mod: 0,
-              cost: 0,
-              result: "1d-2 / 1d"
+              att: props.character.attMods.dmgMod,
+              updater: (val: number) => {props.setCharacter(produce(props.character, next => {
+                next.attMods.dmgMod = val;
+              }))},
+              alert: "Rule: this cannot be adjusted on its own, which is why the point cost is unaffected.",
+              result: () => calcDmg(props.character)
             },
             {
               name: "HP",
-              mod: 0,
-              cost: 0,
-              result: 10
+              att: props.character.attMods.hpMod,
+              updater: (val: number) => {props.setCharacter(produce(props.character, next => {
+                next.attMods.hpMod = val;
+              }))},
+              cost: hpModPoints
             },
             {
               name: "Will",
-              mod: 0,
-              cost: 0,
-              result: 10
+              att: props.character.attMods.willMod,
+              updater: (val: number) => {props.setCharacter(produce(props.character, next => {
+                next.attMods.willMod = val;
+              }))},
+              cost: willModPoints
             },
             {
               name: "Per",
-              mod: 0,
-              cost: 0,
-              result: 10
+              att: props.character.attMods.perMod,
+              updater: (val: number) => {props.setCharacter(produce(props.character, next => {
+                next.attMods.perMod = val;
+              }))},
+              cost: perModPoints
             },
             {
               name: "Basic Speed",
-              mod: 0,
-              cost: 0,
-              result: 10
+              att: props.character.attMods.speedMod,
+              updater: (val: number) => {props.setCharacter(produce(props.character, next => {
+                next.attMods.speedMod = val;
+              }))},
+              cost: speedModPoints
             },
             {
               name: "Basic Move",
-              mod: 0,
-              cost: 0,
-              result: 10
+              att: props.character.attMods.moveMod,
+              updater: (val: number) => {props.setCharacter(produce(props.character, next => {
+                next.attMods.moveMod = val;
+              }))},
+              cost: moveModPoints
             },
             {
               name: "Size",
-              mod: 0,
-              cost: 0,
-              result: 10
+              att: props.character.attMods.sizeMod,
+              updater: (val: number) => {props.setCharacter(produce(props.character, next => {
+                next.attMods.sizeMod = val;
+              }))},
+              alert: "Add point adjustments manually as Adjusters in the Advantages table"
             },
             {
               name: "Magery Bonus",
-              mod: 0,
-              cost: 0,
-              result: 0
+              att: props.character.attMods.mageryBonus,
+              updater: (val: number) => {props.setCharacter(produce(props.character, next => {
+                next.attMods.mageryBonus = val;
+              }))},
+              alert: "Used for bonuses such as Magical Aptitude that adjust the base skill level of spells"
             },
           ]}
           loadingText="Loading resources"

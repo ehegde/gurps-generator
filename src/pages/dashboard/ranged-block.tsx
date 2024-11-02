@@ -58,8 +58,7 @@ export default function RangedBlock() {
       }
       header={
           <Header>
-            <Icon name="video-on"></Icon>
-              Ranged Weapons
+            <Icon name="video-on"></Icon> Ranged Weapons
           </Header>
       }
     />

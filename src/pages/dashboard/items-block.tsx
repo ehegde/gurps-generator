@@ -104,8 +104,7 @@ export default function ItemsBlock() {
               <Button>Delete</Button>
             </SpaceBetween>
           }>
-            <Icon name="keyboard"></Icon>
-              Items
+            <Icon name="keyboard"></Icon> Items
           </Header>
       }
     />

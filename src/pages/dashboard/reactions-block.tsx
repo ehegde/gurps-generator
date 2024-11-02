@@ -91,8 +91,7 @@ export default function ReactionsBlock() {
               <Button>Delete</Button>
             </SpaceBetween>
           }>
-            <Icon name="star"></Icon>
-              Reactions
+            <Icon name="star"></Icon> Reactions
           </Header>
       }
     />
