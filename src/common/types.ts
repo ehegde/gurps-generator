@@ -13,11 +13,6 @@ export interface Item {
   details: number;
 }
 
-export interface Factor {
-  name: string;
-  cost: number;
-}
-
 export enum ArmorPieces {
   ALL = 'All',
   HEAD = 'Head',
@@ -28,10 +23,33 @@ export enum ArmorPieces {
   FEET = 'Feet'
 }
 
+export interface Factor {
+  name: string;
+  cost: number;
+  notes?: string;
+}
+
 // Includes shields in this homebrew as a straight DR item
 export interface Armor extends Factor {
   dr: number;
-  pieces: ArmorPieces[];
+  locations: ArmorPieces[];
+}
+
+export interface Item extends Factor {
+  qty: number;
+}
+
+export interface Advantage extends Factor {
+  type: AdvantageType;
+}
+
+export interface MeleeWeapon extends Factor {
+  dmgType: string;
+  dmgAmt: string;
+  reach: string;
+  lvl: number;
+  qty: number;
+  parry: string;
 }
 
 export enum AdvantageType {
@@ -50,7 +68,7 @@ export interface Character {
   bio: {
     name: string;
     player: string;
-    description: string;
+    notes: string;
     appearance: string;
     height: string;
     weight: string;
@@ -63,7 +81,7 @@ export interface Character {
     iq: number;
     ht: number;
   },
-  mods: {
+  attMods: {
     dmgMod: number;
     hpMod: number;
     willMod: number;
@@ -73,91 +91,11 @@ export interface Character {
     sizeMod: number;
     magicalAptitude: number;
   },
-  advantages: Factor[],
-  disadvantages: Factor[],
-  quirks: Factor[],
+  advantages: Advantage[],
+  reactions: Factor[],
   armors: Armor[],
-  "equipments": [
-    {
-      "name": "Gold",
-      "qty": "50",
-      "cost": 0,
-      "weight": 0
-    },
-    {
-      "name": "Cigar - Heal",
-      "qty": "2",
-      "cost": 0,
-      "weight": 0
-    },
-    {
-      "name": "Cigar - Knock Out",
-      "qty": 1,
-      "cost": 0,
-      "weight": 0
-    },
-    {
-      "name": "Cigar - Damage",
-      "qty": 1,
-      "cost": 0,
-      "weight": 0
-    },
-    {
-      "name": "Cigar - Reg Smokescreen",
-      "qty": 1,
-      "cost": 0,
-      "weight": 0
-    },
-    {
-      "name": "Undergarments",
-      "qty": 1,
-      "cost": 0,
-      "weight": 0
-    },
-    {
-      "name": "Basic Clothes",
-      "qty": 1,
-      "cost": 0,
-      "weight": 0
-    },
-    {
-      "name": "Magical Lighter",
-      "qty": 1,
-      "cost": 0,
-      "weight": 0
-    },
-    {
-      "name": "Trench Coat",
-      "qty": 1,
-      "cost": 0,
-      "weight": 0
-    },
-    {
-      "name": "Boots",
-      "qty": 1,
-      "cost": 0,
-      "weight": 0
-    },
-    {
-      "name": "Provisions - 1 day",
-      "qty": 1,
-      "cost": 0,
-      "weight": 0
-    },
-    {
-      "name": "Briefcase",
-      "qty": 1,
-      "cost": 0,
-      "weight": 0
-    },
-    {
-      "name": "Warding Stone - Lvl 1",
-      "qty": 1,
-      "cost": 0,
-      "weight": 0
-    }
-  ],
-  "reactions": [],
+  items: Item[],
+  meleeWeapons: MeleeWeapon[],
   "skills": [
     {
       "id": "alchemy",

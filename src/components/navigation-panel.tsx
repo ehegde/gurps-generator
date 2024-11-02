@@ -17,24 +17,26 @@ export default function NavigationPanel() {
   const [items] = useState<SideNavigationProps.Item[]>(() => {
     const items: SideNavigationProps.Item[] = [
       {
-        type: "link",
-        text: "Dashboard",
-        href: "/",
-      },
-      {
         type: "section",
-        text: "Section 1",
-        items: [{ type: "link", text: "Items", href: "/section1" }],
-      },
-      {
-        type: "section",
-        text: "Section 2",
+        text: "Character Creator",
         items: [
-          { type: "link", text: "Item 1", href: "/section2/item1" },
-          { type: "link", text: "Item 2", href: "/section2/item2" },
-          { type: "link", text: "Item 2", href: "/section2/item3" },
+          { type: "link", text: "Import/Export Character", href: "/#import-export-block" },
+          { type: "link", text: "Basic Details", href: "/#basic-details-block" },
+          { type: "link", text: "Attributes", href: "/#attributes-block" },
+          { type: "link", text: "Advantages, Disadvantages, Perks, Quirks", href: "/#advantages-block" },
+          { type: "link", text: "Reactions", href: "/#reactions-block" },
+          { type: "link", text: "Skills and Spells", href: "/#skills-block" },
+          { type: "link", text: "Melee Weapons", href: "/#melee-block" },
+          { type: "link", text: "Ranged Weapons", href: "/#ranged-block" },
+          { type: "link", text: "Items", href: "/#items-block" },
+          { type: "link", text: "Armor and Shields", href: "/#armor-block" },
         ],
       },
+      {
+        type: "section",
+        text: "Character Sheet",
+        items: [{ type: "link", text: "View Character Sheet", href: "/sheet" }],
+      }
     ];
 
     return items;

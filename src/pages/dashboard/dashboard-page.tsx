@@ -16,9 +16,28 @@ import SkillsBlock from "./skills-block";
 import MeleeBlock from "./melee-block";
 import ItemsBlock from "./items-block";
 import ArmorBlock from "./armor-block";
+import RangedBlock from "./ranged-block";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function DashboardPage() {
   const onFollow = useOnFollow();
+  const { pathname, hash, key } = useLocation();
+
+  useEffect(() => {
+    if (hash === '') {
+      window.scrollTo(0, 0);
+    }
+    else {
+      setTimeout(() => {
+        const id = hash.replace('#', '');
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView();
+        }
+      }, 0);
+    }
+  }, [pathname, hash, key]);
 
   return (
     <BaseAppLayout
@@ -36,15 +55,16 @@ export default function DashboardPage() {
       content={
         <ContentLayout header={<DashboardHeader />}>
           <SpaceBetween size="l">
-            <ImportExportBlock />
-            <BasicDetailsBlock />
-            <AttributesBlock />
-            <AdvantagesBlock />
-            <ReactionsBlock />
-            <SkillsBlock />
-            <MeleeBlock />
-            <ItemsBlock />
-            <ArmorBlock />
+            <div id="import-export-block"><ImportExportBlock /></div>
+            <div id="basic-details-block"><BasicDetailsBlock /></div>
+            <div id="attributes-block"><AttributesBlock /></div>
+            <div id="advantages-block"><AdvantagesBlock /></div>
+            <div id="reactions-block"><ReactionsBlock /></div>
+            <div id="skills-block"><SkillsBlock /></div>
+            <div id="melee-block"><MeleeBlock /></div>
+            <div id="ranged-block"><RangedBlock /></div>
+            <div id="items-block"><ItemsBlock /></div>
+            <div id="armor-block"><ArmorBlock /></div>
           </SpaceBetween>
         </ContentLayout>
       }

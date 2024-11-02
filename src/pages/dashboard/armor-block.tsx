@@ -106,7 +106,7 @@ export default function ArmorBlock() {
             </SpaceBetween>
           }>
             <Icon name="treeview-expand"></Icon>
-              Armor / Shields
+              Armor and Shields
           </Header>
       }
     />

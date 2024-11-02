@@ -3,13 +3,14 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  useLocation,
 } from "react-router-dom";
 import { USE_BROWSER_ROUTER } from "./common/constants";
 import GlobalHeader from "./components/global-header";
 import DashboardPage from "./pages/dashboard/dashboard-page";
 import NotFound from "./pages/not-found";
 import "./styles/app.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Character } from "./common/types";
 
 export default function App() {
