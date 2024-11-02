@@ -18,6 +18,7 @@
     "@cloudscape-design/global-styles": "^1.0.32",
     "@cloudscape-design/test-utils-core": "^1.0.44",
     "@cloudscape-design/theming-runtime": "^1.0.63",
+    "immer": "^10.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.0"

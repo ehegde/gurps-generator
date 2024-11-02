@@ -13,16 +13,6 @@ export interface Item {
   details: number;
 }
 
-export enum ArmorPieces {
-  ALL = 'All',
-  HEAD = 'Head',
-  BODY = 'Body',
-  ARMS = 'Arms',
-  LEGS = 'Legs',
-  HANDS = 'Hands',
-  FEET = 'Feet'
-}
-
 export interface Factor {
   name: string;
   cost: number;
@@ -52,6 +42,23 @@ export interface MeleeWeapon extends Factor {
   parry: string;
 }
 
+export interface Skill extends Factor {
+  type: SkillType,
+  adj: string;
+  lvl: number;
+  energy: number;
+}
+
+export enum ArmorPieces {
+  ALL = 'All',
+  HEAD = 'Head',
+  BODY = 'Body',
+  ARMS = 'Arms',
+  LEGS = 'Legs',
+  HANDS = 'Hands',
+  FEET = 'Feet'
+}
+
 export enum AdvantageType {
   ADVANTAGE = 'Advantage',
   PERK = 'Perk',
@@ -74,13 +81,13 @@ export interface Character {
     weight: string;
     age: string;
     unspentPoints: number;
-  },
+  };
   atts: {
     st: number;
     dx: number;
     iq: number;
     ht: number;
-  },
+  };
   attMods: {
     dmgMod: number;
     hpMod: number;
@@ -89,103 +96,17 @@ export interface Character {
     speedMod: number;
     moveMod: number;
     sizeMod: number;
-    magicalAptitude: number;
-  },
-  advantages: Advantage[],
-  reactions: Factor[],
-  armors: Armor[],
-  items: Item[],
-  meleeWeapons: MeleeWeapon[],
-  "skills": [
-    {
-      "id": "alchemy",
-      "name": "Alchemy",
-      "mod": "1",
-      "miscMod": 0,
-      "miscModSrc": "",
-      "difficultyId": "very-hard",
-      "attrId": "iq",
-      "catId": "combat",
-      "isWildcard": false,
-      "defaultId": "",
-      "defaultMod": 0
-    },
-    {
-      "id": "fast-draw",
-      "name": "Fast Draw",
-      "mod": "3",
-      "miscMod": 0,
-      "miscModSrc": "",
-      "difficultyId": "easy",
-      "attrId": "dx",
-      "catId": "combat",
-      "isWildcard": false,
-      "defaultId": "",
-      "defaultMod": 0
-    },
-    {
-      "id": "poison",
-      "name": "Poison (Adjusted to 3E Hard)",
-      "mod": "2",
-      "miscMod": "-6",
-      "miscModSrc": "",
-      "difficultyId": "average",
-      "attrId": "iq",
-      "catId": "other",
-      "isWildcard": false,
-      "defaultId": "",
-      "defaultMod": 0
-    },
-    {
-      "id": "stealth",
-      "name": "Stealth",
-      "mod": "2",
-      "miscMod": "-5",
-      "miscModSrc": "",
-      "difficultyId": "easy",
-      "attrId": "iq",
-      "catId": "combat",
-      "isWildcard": false,
-      "defaultId": "",
-      "defaultMod": 0
-    }
-  ],
-  "spells": [
-    {
-      "name": "Purify Air",
-      "mod": "0",
-      "miscMod": "0",
-      "miscModSrc": "",
-      "difficultyId": "hard",
-      "attrId": "iq",
-      "schoolId": "air"
-    },
-    {
-      "name": "Shape Smoke (Adjust to 3E Hard)",
-      "mod": "1",
-      "miscMod": 0,
-      "miscModSrc": "",
-      "difficultyId": "hard",
-      "attrId": "iq",
-      "schoolId": "air"
-    },
-    {
-      "name": "Breathe Smoke (Adjust to 3E Hard)",
-      "mod": "1",
-      "miscMod": 0,
-      "miscModSrc": "",
-      "difficultyId": "hard",
-      "attrId": "iq",
-      "schoolId": "air"
-    },
-    {
-      "name": "Walk on Smoke",
-      "mod": "-1",
-      "miscMod": 0,
-      "miscModSrc": "",
-      "difficultyId": "hard",
-      "attrId": "iq",
-      "schoolId": "air"
-    }
-  ]
+    mageryBonus: number;
+  };
+  advantages: Advantage[];
+  reactions: Factor[];
+  armors: Armor[];
+  items: Item[];
+  meleeWeapons: MeleeWeapon[];
+  skills: Skill[];
+}
+
+export interface BlockProps {
+  character: Character;
+  setCharacter: React.Dispatch<React.SetStateAction<Character>>;
 }

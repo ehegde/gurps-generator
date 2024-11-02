@@ -19,8 +19,9 @@ import ArmorBlock from "./armor-block";
 import RangedBlock from "./ranged-block";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { BlockProps } from "../../common/types";
 
-export default function DashboardPage() {
+export default function DashboardPage(props: BlockProps) {
   const onFollow = useOnFollow();
   const { pathname, hash, key } = useLocation();
 
@@ -55,9 +56,15 @@ export default function DashboardPage() {
       content={
         <ContentLayout header={<DashboardHeader />}>
           <SpaceBetween size="l">
-            <div id="import-export-block"><ImportExportBlock /></div>
-            <div id="basic-details-block"><BasicDetailsBlock /></div>
-            <div id="attributes-block"><AttributesBlock /></div>
+            <div id="import-export-block">
+              <ImportExportBlock character={props.character} setCharacter={props.setCharacter} />
+            </div>
+            <div id="basic-details-block">
+              <BasicDetailsBlock character={props.character} setCharacter={props.setCharacter} />
+            </div>
+            <div id="attributes-block">
+              <AttributesBlock character={props.character} setCharacter={props.setCharacter} />
+            </div>
             <div id="advantages-block"><AdvantagesBlock /></div>
             <div id="reactions-block"><ReactionsBlock /></div>
             <div id="skills-block"><SkillsBlock /></div>

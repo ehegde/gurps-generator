@@ -12,8 +12,10 @@ import {
   SpaceBetween,
 } from "@cloudscape-design/components";
 import React from "react";
+import { BlockProps } from "../../common/types";
+import { produce } from "immer";
 
-export default function AttributesBlock() {
+export default function AttributesBlock(props: BlockProps) {
   const [value, setValue] = React.useState("");
 
   return (
@@ -24,16 +26,26 @@ export default function AttributesBlock() {
             <div>
               <Box variant="awsui-key-label">ST (Points: 0)</Box>
               <Input
-                onChange={({ detail }) => setValue(detail.value)}
-                value={value}
+                onChange={({ detail }) => props.setCharacter(
+                  produce(props.character, next => {
+                    next.atts.st = Number(detail.value);
+                  })
+                )}
+                value={`${props.character.atts.st}`}
+                type="number"
                 placeholder="10"
               />
             </div>
             <div>
               <Box variant="awsui-key-label">HT (Points: 0)</Box>
               <Input
-                onChange={({ detail }) => setValue(detail.value)}
-                value={value}
+                onChange={({ detail }) => props.setCharacter(
+                  produce(props.character, next => {
+                    next.atts.ht = Number(detail.value);
+                  })
+                )}
+                value={`${props.character.atts.ht}`}
+                type="number"
                 placeholder="10"
               />
             </div>
@@ -42,16 +54,26 @@ export default function AttributesBlock() {
             <div>
               <Box variant="awsui-key-label">DX (Points: 0)</Box>
               <Input
-                onChange={({ detail }) => setValue(detail.value)}
-                value={value}
+                onChange={({ detail }) => props.setCharacter(
+                  produce(props.character, next => {
+                    next.atts.dx = Number(detail.value);
+                  })
+                )}
+                value={`${props.character.atts.dx}`}
+                type="number"
                 placeholder="10"
               />
             </div>
             <div>
               <Box variant="awsui-key-label">IQ (Points: 0)</Box>
               <Input
-                onChange={({ detail }) => setValue(detail.value)}
-                value={value}
+                onChange={({ detail }) => props.setCharacter(
+                  produce(props.character, next => {
+                    next.atts.iq = Number(detail.value);
+                  })
+                )}
+                value={`${props.character.atts.iq}`}
+                type="number"
                 placeholder="10"
               />
             </div>
@@ -92,7 +114,7 @@ export default function AttributesBlock() {
             {
               id: "result",
               header: "Result Value",
-              cell: item => item.result || "-"
+              cell: item => item.result ?? "-"
             }
           ]}
           enableKeyboardNavigation
@@ -138,6 +160,12 @@ export default function AttributesBlock() {
               mod: 0,
               cost: 0,
               result: 10
+            },
+            {
+              name: "Magery Bonus",
+              mod: 0,
+              cost: 0,
+              result: 0
             },
           ]}
           loadingText="Loading resources"

@@ -120,29 +120,10 @@ export default function SkillsBlock() {
       }
       header={
           <Header actions={
-            <SpaceBetween direction="vertical" size="m">
-              <div>
-                <Box variant="awsui-key-label">Magical Energy (= HT)</Box>
-                <Input
-                  onChange={({ detail }) => setValue(detail.value)}
-                  value={value}
-                  placeholder="10"
-                  disabled
-                />
-              </div>
-              <div>
-                <Box variant="awsui-key-label">Magery Bonus</Box>
-                <Input
-                  onChange={({ detail }) => setValue(detail.value)}
-                  value={value}
-                  placeholder="3"
-                />
-              </div>
-              <SpaceBetween direction="horizontal" size="m">
-                <Button variant="primary">Create</Button>
-                <Button>Edit</Button>
-                <Button>Delete</Button>
-              </SpaceBetween>
+            <SpaceBetween direction="horizontal" size="m">
+              <Button variant="primary">Create</Button>
+              <Button>Edit</Button>
+              <Button>Delete</Button>
             </SpaceBetween>
           }>
             <Icon name="suggestions"></Icon>

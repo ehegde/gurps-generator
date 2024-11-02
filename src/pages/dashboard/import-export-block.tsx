@@ -9,9 +9,10 @@ import {
   Icon
 } from "@cloudscape-design/components";
 import React from "react";
+import { BlockProps } from "../../common/types";
 
-export default function ImportExportBlock() {
-  const [value, setValue] = React.useState("");
+export default function ImportExportBlock(props: BlockProps) {
+  const [importJson, setImportJson] = React.useState("{}");
 
   return (
     <Container header={<Header variant="h2"><Icon name="file" /> Import/Export Character</Header>}>
@@ -20,22 +21,20 @@ export default function ImportExportBlock() {
           <SpaceBetween direction="vertical" size="xs">
             <Box variant="awsui-key-label">Import from JSON</Box>
             <Textarea
-              onChange={({ detail }) => setValue(detail.value)}
-              value={value}
+              onChange={({ detail }) => setImportJson(detail.value)}
+              value={importJson}
               placeholder="{}"
             />
-            <Button>Import</Button>
+            <Button onClick={() => props.setCharacter(JSON.parse(importJson))}>Import</Button>
           </SpaceBetween>
         </div>
         <div>
           <SpaceBetween direction="vertical" size="xs">
-            <Box variant="awsui-key-label">Export to JSON</Box>
+            <Box variant="awsui-key-label">JSON Export</Box>
             <Textarea
-              onChange={({ detail }) => setValue(detail.value)}
-              value={value}
+              value={JSON.stringify(props.character)}
               placeholder="{}"
             />
-            <Button>Generate</Button>
           </SpaceBetween>
         </div>
       </ColumnLayout>
