@@ -10,90 +10,186 @@ import {
   Table,
   Link,
   SpaceBetween,
+  Modal,
+  FormField,
 } from "@cloudscape-design/components";
-import React from "react";
+import React, { useEffect } from "react";
+import { BlockProps, Factor } from "../../common/types";
+import { produce } from "immer";
 
-export default function ReactionsBlock() {
-  const [value, setValue] = React.useState("");
-  const [
-    selectedItems,
-    setSelectedItems
-  ] = React.useState([]);
+interface ReactionTableItem extends Factor {
+  index: number;
+}
+interface ReactionEditModalProps {
+  visible: boolean;
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSave: (item: ReactionTableItem) => void;
+  item: ReactionTableItem;
+}
+
+export default function ReactionsBlock(props: BlockProps) {
+  const [selectedItems, setSelectedItems] = React.useState<ReactionTableItem[]>([]);
+  const [editModalVisible, setEditModalVisble] = React.useState(false);
+
+  const handleCreate = () => {
+    // Add default reaction
+    props.setCharacter(produce(props.character, next => {
+      next.reactions.push({
+        name: `New Reaction ${props.character.reactions.length + 1}`,
+        cost: 0
+      });
+    }));
+  };
+
+  const handleEditOpen = () => {
+    // Open edit modal for selected reaction
+    if (selectedItems.length == 1) {
+      setEditModalVisble(true);
+    }
+  };
+
+  const handleEditSave = (item: ReactionTableItem) => {
+    // Save a reaction edited in the edit modal
+    setEditModalVisble(false);
+    props.setCharacter(produce(props.character, next => {
+      const { index, ...data } = item;
+      next.reactions[index] = data;
+    }));
+  };
+
+  const handleDelete = () => {
+    // Delete selected reaction
+    if (selectedItems.length == 1) {
+      props.setCharacter(produce(props.character, next => {
+        next.reactions.splice(selectedItems[0].index, 1);
+      }));
+    }
+  };
 
   return (
-    <Table
-      renderAriaLive={({
-        firstIndex,
-        lastIndex,
-        totalItemsCount
-      }) =>
-        `Displaying items ${firstIndex} to ${lastIndex} of ${totalItemsCount}`
-      }
-      onSelectionChange={({ detail }) =>
-        {
-          setSelectedItems(detail.selectedItems)
-          console.log(detail.selectedItems);
+    <div>
+      <Table
+        renderAriaLive={({
+          firstIndex,
+          lastIndex,
+          totalItemsCount
+        }) =>
+          `Displaying items ${firstIndex} to ${lastIndex} of ${totalItemsCount}`
         }
-      }
-      selectedItems={selectedItems}
-      ariaLabels={{
-        selectionGroupLabel: "Items selection",
-        allItemsSelectionLabel: () => "select all",
-        itemSelectionLabel: ({ selectedItems }, item) =>
-          item.name
-      }}
-      resizableColumns={true} 
-      columnDefinitions={[
-        {
-          id: "name",
-          header: "Name",
-          cell: e => e.name,
-          isRowHeader: true
-        },
-        {
-          id: "val",
-          header: "Value",
-          cell: e => `${e.value}`,
-          isRowHeader: true
+        onSelectionChange={({ detail }) =>
+          {
+            setSelectedItems(detail.selectedItems)
+            console.log(detail.selectedItems);
+          }
         }
-      ]}
-      enableKeyboardNavigation
-      items={[
-        {
-          name: "Test 1",
-          value: -1
-        },
-        {
-          name: "Test 2",
-          value: 2
-        },
-      ]}
-      loadingText="Loading resources"
-      selectionType="single"
-      trackBy="name"
-      empty={
-        <Box
-          margin={{ vertical: "xs" }}
-          textAlign="center"
-          color="inherit"
-        >
-          <SpaceBetween size="m">
-            <b>No resources</b>
-            <Button>Create resource</Button>
+        selectedItems={selectedItems}
+        ariaLabels={{
+          selectionGroupLabel: "Items selection",
+          allItemsSelectionLabel: () => "select all",
+          itemSelectionLabel: ({ selectedItems }, item) =>
+            item.name
+        }}
+        resizableColumns={true} 
+        columnDefinitions={[
+          {
+            id: "name",
+            header: "Name",
+            cell: e => e.name,
+            isRowHeader: true
+          },
+          {
+            id: "val",
+            header: "Value",
+            cell: e => `${e.cost}`,
+            isRowHeader: true
+          }
+        ]}
+        enableKeyboardNavigation
+        items={
+          props.character.reactions.map((val, index) => ({ ...val, index }))
+        }
+        loadingText="Loading resources"
+        selectionType="single"
+        trackBy="index"
+        empty={
+          <Box
+            margin={{ vertical: "xs" }}
+            textAlign="center"
+            color="inherit"
+          >
+            <SpaceBetween size="m">
+              <b>No resources</b>
+            </SpaceBetween>
+          </Box>
+        }
+        header={
+            <Header actions={
+              <SpaceBetween direction="horizontal" size="m">
+                <Button variant="primary" onClick={() => handleCreate()}>Create</Button>
+                <Button onClick={() => handleEditOpen()}>Edit</Button>
+                <Button onClick={() => handleDelete()}>Delete</Button>
+              </SpaceBetween>
+            }>
+              <Icon name="star"></Icon> Reactions
+            </Header>
+        }
+      />
+      <ReactionEditModal
+        visible={editModalVisible}
+        setVisible={setEditModalVisble}
+        handleSave={handleEditSave}
+        item={selectedItems[0]}
+      />
+    </div>
+  );
+}
+
+function ReactionEditModal(props: ReactionEditModalProps) {
+  const [editItem, setEditItem] = React.useState<ReactionTableItem>({
+    index: -1,
+    name: "",
+    cost: 0,
+  });
+
+  useEffect(() => {
+    if (props.item) {
+      setEditItem(props.item);
+    }
+  }, [props.item]);
+
+  return (
+    <Modal
+      onDismiss={() => props.setVisible(false)}
+      visible={props.visible}
+      footer={
+        <Box float="right">
+          <SpaceBetween direction="horizontal" size="xs">
+            <Button variant="link" onClick={() => props.setVisible(false)}>Cancel</Button>
+            <Button variant="primary" onClick={() => props.handleSave(editItem)}>Save</Button>
           </SpaceBetween>
         </Box>
       }
-      header={
-          <Header actions={
-            <SpaceBetween direction="horizontal" size="m">
-              <Button variant="primary">Create</Button>
-              <Button>Edit</Button>
-              <Button>Delete</Button>
-            </SpaceBetween>
-          }>
-            <Icon name="star"></Icon> Reactions
-          </Header>
-      }
-    />
+      header="Edit Reaction"
+    >
+      <SpaceBetween direction="vertical" size="s">
+        <FormField label="Name">
+          <Input
+            value={editItem.name}
+            onChange={({ detail }) => setEditItem({
+              ...editItem, name: detail.value
+            })}
+          />
+        </FormField>
+        <FormField label="Value">
+          <Input
+            value={`${editItem.cost}`}
+            type="number"
+            onChange={({ detail }) => setEditItem({
+              ...editItem, cost: Number(detail.value)
+            })}
+          />
+        </FormField>
+      </SpaceBetween>
+    </Modal>
   );
 }

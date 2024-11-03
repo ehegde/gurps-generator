@@ -5,14 +5,6 @@ export interface NavigationPanelState {
   collapsedSections?: Record<number, boolean>;
 }
 
-export interface Item {
-  itemId: string;
-  name: string;
-  type: string;
-  status: StatusIndicatorProps.Type;
-  details: number;
-}
-
 export interface Factor {
   name: string;
   cost: number;

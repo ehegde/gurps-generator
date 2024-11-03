@@ -65,7 +65,7 @@ export default function NavigationPanel(props: NavigationPanelProps) {
     <SideNavigation
       onFollow={onFollow}
       onChange={onChange}
-      header={{ href: "/", text: `Points: ${0}` }}
+      header={{ href: "/", text: `Total Points: ${0}` }}
       activeHref={location.pathname}
       items={items.map((value, idx) => {
         if (value.type === "section") {
