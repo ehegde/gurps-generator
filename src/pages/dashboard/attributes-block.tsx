@@ -17,7 +17,7 @@ import React from "react";
 import { BlockProps } from "../../common/types";
 import { produce } from "immer";
 import { dmgModPoints, dxPoints, hpModPoints, htPoints, iqPoints, moveModPoints, perModPoints, speedModPoints, stPoints, willModPoints } from "../../common/helpers/character-points";
-import { calcDmg } from "../../common/helpers/character-outputs";
+import { calcDmg, calcHp, calcMove, calcPer, calcSpeed, calcWill } from "../../common/helpers/character-outputs";
 
 export default function AttributesBlock(props: BlockProps) {
   const [value, setValue] = React.useState("");
@@ -28,7 +28,7 @@ export default function AttributesBlock(props: BlockProps) {
         <ColumnLayout columns={2} variant="text-grid">
           <ColumnLayout columns={2}>
             <div>
-              <Box variant="awsui-key-label">ST (Points: {stPoints(props.character.atts.st)})</Box>
+              <Box variant="awsui-key-label">ST (Points: {stPoints(props.character)})</Box>
               <Input
                 onChange={({ detail }) => props.setCharacter(
                   produce(props.character, next => {
@@ -41,7 +41,7 @@ export default function AttributesBlock(props: BlockProps) {
               />
             </div>
             <div>
-              <Box variant="awsui-key-label">HT (Points: {htPoints(props.character.atts.ht)})</Box>
+              <Box variant="awsui-key-label">HT (Points: {htPoints(props.character)})</Box>
               <Input
                 onChange={({ detail }) => props.setCharacter(
                   produce(props.character, next => {
@@ -56,7 +56,7 @@ export default function AttributesBlock(props: BlockProps) {
           </ColumnLayout>
           <ColumnLayout columns={2}>
             <div>
-              <Box variant="awsui-key-label">DX (Points: {dxPoints(props.character.atts.dx)})</Box>
+              <Box variant="awsui-key-label">DX (Points: {dxPoints(props.character)})</Box>
               <Input
                 onChange={({ detail }) => props.setCharacter(
                   produce(props.character, next => {
@@ -69,7 +69,7 @@ export default function AttributesBlock(props: BlockProps) {
               />
             </div>
             <div>
-              <Box variant="awsui-key-label">IQ (Points: {iqPoints(props.character.atts.iq)})</Box>
+              <Box variant="awsui-key-label">IQ (Points: {iqPoints(props.character)})</Box>
               <Input
                 onChange={({ detail }) => props.setCharacter(
                   produce(props.character, next => {
@@ -122,7 +122,7 @@ export default function AttributesBlock(props: BlockProps) {
             {
               id: "cost",
               header: "Point Cost",
-              cell: item => item.cost ? item.cost(item.att) : "-"
+              cell: item => item.cost ? item.cost(props.character) : "-"
             },
             {
               id: "result",
@@ -147,7 +147,8 @@ export default function AttributesBlock(props: BlockProps) {
               updater: (val: number) => {props.setCharacter(produce(props.character, next => {
                 next.attMods.hpMod = val;
               }))},
-              cost: hpModPoints
+              cost: hpModPoints,
+              result: () => calcHp(props.character)
             },
             {
               name: "Will",
@@ -155,7 +156,8 @@ export default function AttributesBlock(props: BlockProps) {
               updater: (val: number) => {props.setCharacter(produce(props.character, next => {
                 next.attMods.willMod = val;
               }))},
-              cost: willModPoints
+              cost: willModPoints,
+              result: () => calcWill(props.character)
             },
             {
               name: "Per",
@@ -163,7 +165,8 @@ export default function AttributesBlock(props: BlockProps) {
               updater: (val: number) => {props.setCharacter(produce(props.character, next => {
                 next.attMods.perMod = val;
               }))},
-              cost: perModPoints
+              cost: perModPoints,
+              result: () => calcPer(props.character)
             },
             {
               name: "Basic Speed",
@@ -171,7 +174,8 @@ export default function AttributesBlock(props: BlockProps) {
               updater: (val: number) => {props.setCharacter(produce(props.character, next => {
                 next.attMods.speedMod = val;
               }))},
-              cost: speedModPoints
+              cost: speedModPoints,
+              result: () => calcSpeed(props.character)
             },
             {
               name: "Basic Move",
@@ -179,7 +183,8 @@ export default function AttributesBlock(props: BlockProps) {
               updater: (val: number) => {props.setCharacter(produce(props.character, next => {
                 next.attMods.moveMod = val;
               }))},
-              cost: moveModPoints
+              cost: moveModPoints,
+              result: () => calcMove(props.character)
             },
             {
               name: "Size",
