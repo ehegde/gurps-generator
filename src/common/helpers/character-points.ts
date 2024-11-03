@@ -1,4 +1,4 @@
-import { Character } from "../types";
+import { Advantage, Character } from "../types";
 
 // Basic attributes
 export const stPoints = (char: Character) => (char.atts.st - 10) * 10;
@@ -25,3 +25,8 @@ export const willModPoints = (char: Character) => char.attMods.willMod * 5;
 export const perModPoints = (char: Character) => char.attMods.perMod * 5;
 export const speedModPoints = (char: Character) => char.attMods.speedMod * 20;
 export const moveModPoints = (char: Character) => char.attMods.moveMod * 5;
+
+// Advantages, disadvantages, quirks, perks, adjusters
+export const advantagesTotalPoints = (char: Character) => char.advantages.reduce(
+  (totalPoints, adv) => totalPoints + adv.cost, 0
+);

@@ -65,7 +65,9 @@ export default function DashboardPage(props: BlockProps) {
             <div id="attributes-block">
               <AttributesBlock character={props.character} setCharacter={props.setCharacter} />
             </div>
-            <div id="advantages-block"><AdvantagesBlock /></div>
+            <div id="advantages-block">
+              <AdvantagesBlock character={props.character} setCharacter={props.setCharacter} />
+            </div>
             <div id="reactions-block"><ReactionsBlock /></div>
             <div id="skills-block"><SkillsBlock /></div>
             <div id="melee-block"><MeleeBlock /></div>

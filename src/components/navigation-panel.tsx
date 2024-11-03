@@ -7,8 +7,13 @@ import { useState } from "react";
 import { useOnFollow } from "../common/hooks/use-on-follow";
 import { APP_NAME } from "../common/constants";
 import { useLocation } from "react-router-dom";
+import { Character } from "../common/types";
 
-export default function NavigationPanel() {
+interface NavigationPanelProps {
+  character: Character
+}
+
+export default function NavigationPanel(props: NavigationPanelProps) {
   const location = useLocation();
   const onFollow = useOnFollow();
   const [navigationPanelState, setNavigationPanelState] =
@@ -60,7 +65,7 @@ export default function NavigationPanel() {
     <SideNavigation
       onFollow={onFollow}
       onChange={onChange}
-      header={{ href: "/", text: APP_NAME }}
+      header={{ href: "/", text: `Points: ${0}` }}
       activeHref={location.pathname}
       items={items.map((value, idx) => {
         if (value.type === "section") {

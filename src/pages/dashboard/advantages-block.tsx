@@ -10,105 +10,220 @@ import {
   Table,
   Link,
   SpaceBetween,
+  Modal,
+  Select,
+  FormField,
 } from "@cloudscape-design/components";
-import React from "react";
-import { AdvantageType } from "../../common/types";
+import React, { useEffect } from "react";
+import { Advantage, AdvantageType, BlockProps } from "../../common/types";
+import { produce } from "immer";
 
-export default function AdvantagesBlock() {
-  const [value, setValue] = React.useState("");
-  const [
-    selectedItems,
-    setSelectedItems
-  ] = React.useState([]);
+
+interface AdvantageTableItem extends Advantage {
+  index: number;
+}
+interface AdvantageEditModalProps {
+  visible: boolean;
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSave: (item: AdvantageTableItem) => void;
+  item: AdvantageTableItem;
+}
+
+export default function AdvantagesBlock(props: BlockProps) {
+  const [selectedItems, setSelectedItems] = React.useState<AdvantageTableItem[]>([]);
+  const [editModalVisible, setEditModalVisble] = React.useState(false);
+
+  const handleCreate = () => {
+    // Add default advantage
+    props.setCharacter(produce(props.character, next => {
+      next.advantages.push({
+        name: `New Factor ${props.character.advantages.length + 1}`,
+        type: AdvantageType.ADVANTAGE,
+        cost: 0
+      });
+    }));
+  };
+
+  const handleEditOpen = () => {
+    // Open edit modal for selected advantage
+    if (selectedItems.length == 1) {
+      setEditModalVisble(true);
+    }
+  };
+
+  const handleEditSave = (item: AdvantageTableItem) => {
+    // Save an advantage edited in the edit modal
+    setEditModalVisble(false);
+    props.setCharacter(produce(props.character, next => {
+      const { index, ...data } = item;
+      next.advantages[index] = data;
+    }));
+  };
+
+  const handleDelete = () => {
+    // Delete selected advantage
+    if (selectedItems.length == 1) {
+      props.setCharacter(produce(props.character, next => {
+        next.advantages.splice(selectedItems[0].index, 1);
+      }));
+    }
+  };
 
   return (
-    <Table
-      renderAriaLive={({
-        firstIndex,
-        lastIndex,
-        totalItemsCount
-      }) =>
-        `Displaying items ${firstIndex} to ${lastIndex} of ${totalItemsCount}`
-      }
-      onSelectionChange={({ detail }) =>
-        {
-          setSelectedItems(detail.selectedItems)
-          console.log(detail.selectedItems);
+    <div>
+      <Table
+        renderAriaLive={({
+          firstIndex,
+          lastIndex,
+          totalItemsCount
+        }) =>
+          `Displaying items ${firstIndex} to ${lastIndex} of ${totalItemsCount}`
         }
-      }
-      selectedItems={selectedItems}
-      ariaLabels={{
-        selectionGroupLabel: "Items selection",
-        allItemsSelectionLabel: () => "select all",
-        itemSelectionLabel: ({ selectedItems }, item) =>
-          item.name
-      }}
-      resizableColumns={true} 
-      columnDefinitions={[
-        {
-          id: "type",
-          header: "Type",
-          cell: e => e.type,
-          isRowHeader: true
-        },
-        {
-          id: "name",
-          header: "Name",
-          cell: e => e.name,
-        },
-        {
-          id: "cost",
-          header: "Point Cost",
-          cell: e => `${e.pts}`
-        },
-        {
-          id: "description",
-          header: "Description",
-          cell: e => e.description
+        onSelectionChange={({ detail }) =>
+          {
+            setSelectedItems(detail.selectedItems)
+            console.log(detail.selectedItems);
+          }
         }
-      ]}
-      enableKeyboardNavigation
-      items={[
-        {
-          type: AdvantageType.ADVANTAGE,
-          name: "Test 1",
-          pts: 0,
-          description: "-",
-        },
-        {
-          type: AdvantageType.DISADVANTAGE,
-          name: "Test 2",
-          pts: 0,
-          description: "Yes",
-        },
-      ]}
-      loadingText="Loading resources"
-      selectionType="single"
-      trackBy="name"
-      empty={
-        <Box
-          margin={{ vertical: "xs" }}
-          textAlign="center"
-          color="inherit"
-        >
-          <SpaceBetween size="m">
+        selectedItems={selectedItems}
+        ariaLabels={{
+          selectionGroupLabel: "Items selection",
+          allItemsSelectionLabel: () => "select all",
+          itemSelectionLabel: ({ selectedItems }, item) => item.name
+        }}
+        resizableColumns={true} 
+        columnDefinitions={[
+          {
+            id: "type",
+            header: "Type",
+            cell: e => e.type,
+            isRowHeader: true
+          },
+          {
+            id: "name",
+            header: "Name",
+            cell: e => e.name,
+          },
+          {
+            id: "cost",
+            header: "Point Cost",
+            cell: e => `${e.cost}`
+          },
+          {
+            id: "description",
+            header: "Description",
+            cell: e => e.notes ?? "-"
+          }
+        ]}
+        enableKeyboardNavigation
+        items={
+          props.character.advantages.map((val, index) => ({ ...val, index }))
+        }
+        loadingText="Loading resources"
+        selectionType="single"
+        trackBy="index"
+        empty={
+          <Box
+            margin={{ vertical: "xs" }}
+            textAlign="center"
+            color="inherit"
+          >
             <b>No resources</b>
-            <Button>Create resource</Button>
+          </Box>
+        }
+        header={
+            <Header actions={
+              <SpaceBetween direction="horizontal" size="m">
+                <Button variant="primary" onClick={() => handleCreate()}>Create</Button>
+                <Button onClick={() => handleEditOpen()}>Edit</Button>
+                <Button onClick={() => handleDelete()}>Delete</Button>
+              </SpaceBetween>
+            }>
+              <Icon name="caret-up-filled"></Icon>
+              <Icon name="caret-down-filled"></Icon> Advantages, Disadvantages, Perks, Quirks
+            </Header>
+        }
+      />
+
+      <AdvantageEditModal
+        visible={editModalVisible}
+        setVisible={setEditModalVisble}
+        handleSave={handleEditSave}
+        item={selectedItems[0]}
+      />
+    </div>
+  );
+}
+
+function AdvantageEditModal(props: AdvantageEditModalProps) {
+  const TYPE_OPTIONS = Object.values(AdvantageType).map((name) => ({ label: name, value: name }));
+
+  const [editItem, setEditItem] = React.useState<AdvantageTableItem>({
+    index: -1,
+    name: "",
+    cost: 0,
+    notes: "",
+    type: AdvantageType.ADVANTAGE
+  });
+
+  useEffect(() => {
+    if (props.item) {
+      setEditItem(props.item);
+    }
+  }, [props.item]);
+
+  return (
+    <Modal
+      onDismiss={() => props.setVisible(false)}
+      visible={props.visible}
+      footer={
+        <Box float="right">
+          <SpaceBetween direction="horizontal" size="xs">
+            <Button variant="link" onClick={() => props.setVisible(false)}>Cancel</Button>
+            <Button variant="primary" onClick={() => props.handleSave(editItem)}>Save</Button>
           </SpaceBetween>
         </Box>
       }
-      header={
-          <Header actions={
-            <SpaceBetween direction="horizontal" size="m">
-              <Button variant="primary">Create</Button>
-              <Button>Edit</Button>
-              <Button>Delete</Button>
-            </SpaceBetween>
-          }>
-            <Icon name="caret-up-filled"></Icon>
-            <Icon name="caret-down-filled"></Icon> Advantages, Disadvantages, Perks, Quirks
-          </Header>
-      }
-    />
+      header="Edit Factor"
+    >
+      <SpaceBetween direction="vertical" size="s">
+        <FormField label="Type">
+          <Select
+            selectedOption={{ label: editItem.type, value: editItem.type }}
+            onChange={({ detail }) =>
+              setEditItem({
+                ...editItem, type: detail.selectedOption.value as AdvantageType
+              })
+            }
+            options={TYPE_OPTIONS}
+          />
+        </FormField>
+        <FormField label="Name">
+          <Input
+            value={editItem.name}
+            onChange={({ detail }) => setEditItem({
+              ...editItem, name: detail.value
+            })}
+          />
+        </FormField>
+        <FormField label="Cost">
+          <Input
+            value={`${editItem.cost}`}
+            type="number"
+            onChange={({ detail }) => setEditItem({
+              ...editItem, cost: Number(detail.value)
+            })}
+          />
+        </FormField>
+        <FormField label="Description">
+          <Input
+            value={editItem.notes ?? ""}
+            onChange={({ detail }) => setEditItem({
+              ...editItem, notes: detail.value
+            })}
+          />
+        </FormField>
+      </SpaceBetween>
+    </Modal>
   );
 }
