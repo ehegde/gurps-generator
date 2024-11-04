@@ -24,7 +24,7 @@ interface AdvantageTableItem extends Advantage {
 }
 interface AdvantageEditModalProps {
   visible: boolean;
-  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  handleClose: () => void;
   handleSave: (item: AdvantageTableItem) => void;
   item: AdvantageTableItem;
 }
@@ -51,9 +51,14 @@ export default function AdvantagesBlock(props: BlockProps) {
     }
   };
 
+  const handleEditClose = () => {
+    setEditModalVisble(false);
+    setSelectedItems([]);
+  };
+
   const handleEditSave = (item: AdvantageTableItem) => {
     // Save an advantage edited in the edit modal
-    setEditModalVisble(false);
+    handleEditClose();
     props.setCharacter(produce(props.character, next => {
       const { index, ...data } = item;
       next.advantages[index] = data;
@@ -147,7 +152,7 @@ export default function AdvantagesBlock(props: BlockProps) {
 
       <AdvantageEditModal
         visible={editModalVisible}
-        setVisible={setEditModalVisble}
+        handleClose={handleEditClose}
         handleSave={handleEditSave}
         item={selectedItems[0]}
       />
@@ -174,12 +179,12 @@ function AdvantageEditModal(props: AdvantageEditModalProps) {
 
   return (
     <Modal
-      onDismiss={() => props.setVisible(false)}
+      onDismiss={() => props.handleClose()}
       visible={props.visible}
       footer={
         <Box float="right">
           <SpaceBetween direction="horizontal" size="xs">
-            <Button variant="link" onClick={() => props.setVisible(false)}>Cancel</Button>
+            <Button variant="link" onClick={() => props.handleClose()}>Cancel</Button>
             <Button variant="primary" onClick={() => props.handleSave(editItem)}>Save</Button>
           </SpaceBetween>
         </Box>

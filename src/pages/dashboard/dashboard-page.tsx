@@ -71,13 +71,19 @@ export default function DashboardPage(props: BlockProps) {
             <div id="reactions-block">
               <ReactionsBlock character={props.character} setCharacter={props.setCharacter} />
             </div>
-            <div id="skills-block"><SkillsBlock /></div>
-            <div id="melee-block"><MeleeBlock /></div>
+            <div id="skills-block">
+              <SkillsBlock character={props.character} setCharacter={props.setCharacter} />
+            </div>
+            <div id="melee-block">
+              <MeleeBlock character={props.character} setCharacter={props.setCharacter} />
+            </div>
             <div id="ranged-block"><RangedBlock /></div>
             <div id="items-block">
               <ItemsBlock character={props.character} setCharacter={props.setCharacter} />
             </div>
-            <div id="armor-block"><ArmorBlock /></div>
+            <div id="armor-block">
+              <ArmorBlock character={props.character} setCharacter={props.setCharacter} />
+            </div>
           </SpaceBetween>
         </ContentLayout>
       }

@@ -14,7 +14,7 @@ export interface Factor {
 // Includes shields in this homebrew as a straight DR item
 export interface Armor extends Factor {
   dr: number;
-  locations: ArmorPieces[];
+  locations: ArmorPiece[];
 }
 
 export interface Item extends Factor {
@@ -34,14 +34,15 @@ export interface MeleeWeapon extends Factor {
   parry: string;
 }
 
-export interface Skill extends Factor {
+export interface Skill extends Omit<Factor, 'cost'> { // point cost is calculated for skills, not user input
   type: SkillType,
-  adj: string;
-  lvl: number;
-  energy: number;
+  att: Att,
+  attMod: number; // affects point cost
+  defaultMod: number; // does not affect point cost
+  difficulty: SkillDifficulty;
 }
 
-export enum ArmorPieces {
+export enum ArmorPiece {
   ALL = 'All',
   HEAD = 'Head',
   BODY = 'Body',
@@ -62,6 +63,13 @@ export enum AdvantageType {
 export enum SkillType {
   SKILL = 'Skill',
   SPELL = 'Spell'
+}
+
+export enum SkillDifficulty {
+  EASY = 'Easy',
+  AVERAGE = 'Avg',
+  HARD = 'Hard',
+  VERY_HARD = 'Very Hard'
 }
 
 export interface Character {
@@ -98,6 +106,8 @@ export interface Character {
   meleeWeapons: MeleeWeapon[];
   skills: Skill[];
 }
+
+export type Att = keyof Character['atts'];
 
 export interface BlockProps {
   character: Character;

@@ -52,7 +52,6 @@ export default function RangedBlock() {
         >
           <SpaceBetween size="m">
             <b>To be implemented in the future</b>
-            <Button disabled>Create resource</Button>
           </SpaceBetween>
         </Box>
       }

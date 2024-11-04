@@ -22,7 +22,7 @@ interface ReactionTableItem extends Factor {
 }
 interface ReactionEditModalProps {
   visible: boolean;
-  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  handleClose: () => void;
   handleSave: (item: ReactionTableItem) => void;
   item: ReactionTableItem;
 }
@@ -48,9 +48,14 @@ export default function ReactionsBlock(props: BlockProps) {
     }
   };
 
+  const handleEditClose = () => {
+    setEditModalVisble(false);
+    setSelectedItems([]);
+  };
+
   const handleEditSave = (item: ReactionTableItem) => {
     // Save a reaction edited in the edit modal
-    setEditModalVisble(false);
+    handleEditClose();
     props.setCharacter(produce(props.character, next => {
       const { index, ...data } = item;
       next.reactions[index] = data;
@@ -136,7 +141,7 @@ export default function ReactionsBlock(props: BlockProps) {
       />
       <ReactionEditModal
         visible={editModalVisible}
-        setVisible={setEditModalVisble}
+        handleClose={handleEditClose}
         handleSave={handleEditSave}
         item={selectedItems[0]}
       />
@@ -145,7 +150,7 @@ export default function ReactionsBlock(props: BlockProps) {
 }
 
 function ReactionEditModal(props: ReactionEditModalProps) {
-  const [editItem, setEditItem] = React.useState<ReactionTableItem>({
+  const [editItem, setEditItem] = React.useState<ReactionTableItem>(props.item ?? {
     index: -1,
     name: "",
     cost: 0,
@@ -159,12 +164,12 @@ function ReactionEditModal(props: ReactionEditModalProps) {
 
   return (
     <Modal
-      onDismiss={() => props.setVisible(false)}
+      onDismiss={() => props.handleClose()}
       visible={props.visible}
       footer={
         <Box float="right">
           <SpaceBetween direction="horizontal" size="xs">
-            <Button variant="link" onClick={() => props.setVisible(false)}>Cancel</Button>
+            <Button variant="link" onClick={() => props.handleClose()}>Cancel</Button>
             <Button variant="primary" onClick={() => props.handleSave(editItem)}>Save</Button>
           </SpaceBetween>
         </Box>

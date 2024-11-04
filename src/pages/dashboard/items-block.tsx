@@ -23,7 +23,7 @@ interface ItemTableItem extends Item {
 }
 interface ItemEditModalProps {
   visible: boolean;
-  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  handleClose: () => void;
   handleSave: (item: ItemTableItem) => void;
   item: ItemTableItem;
 }
@@ -50,9 +50,14 @@ export default function ItemsBlock(props: BlockProps) {
     }
   };
 
+  const handleEditClose = () => {
+    setEditModalVisble(false);
+    setSelectedItems([]);
+  };
+
   const handleEditSave = (item: ItemTableItem) => {
     // Save an item edited in the edit modal
-    setEditModalVisble(false);
+    handleEditClose();
     props.setCharacter(produce(props.character, next => {
       const { index, ...data } = item;
       next.items[index] = data;
@@ -148,7 +153,7 @@ export default function ItemsBlock(props: BlockProps) {
 
       <ItemEditModal
         visible={editModalVisible}
-        setVisible={setEditModalVisble}
+        handleClose={handleEditClose}
         handleSave={handleEditSave}
         item={selectedItems[0]}
       />
@@ -157,7 +162,7 @@ export default function ItemsBlock(props: BlockProps) {
 }
 
 function ItemEditModal(props: ItemEditModalProps) {
-  const [editItem, setEditItem] = React.useState<ItemTableItem>({
+  const [editItem, setEditItem] = React.useState<ItemTableItem>(props.item ?? {
     index: -1,
     name: "",
     cost: 0,
@@ -173,17 +178,17 @@ function ItemEditModal(props: ItemEditModalProps) {
 
   return (
     <Modal
-      onDismiss={() => props.setVisible(false)}
+      onDismiss={() => props.handleClose()}
       visible={props.visible}
       footer={
         <Box float="right">
           <SpaceBetween direction="horizontal" size="xs">
-            <Button variant="link" onClick={() => props.setVisible(false)}>Cancel</Button>
+            <Button variant="link" onClick={() => props.handleClose()}>Cancel</Button>
             <Button variant="primary" onClick={() => props.handleSave(editItem)}>Save</Button>
           </SpaceBetween>
         </Box>
       }
-      header="Edit Factor"
+      header="Edit Item"
     >
       <SpaceBetween direction="vertical" size="s">
         <FormField label="Name">

@@ -1,4 +1,4 @@
-import { Advantage, Character } from "../types";
+import { Advantage, Character, Skill, SkillType } from "../types";
 
 // Basic attributes
 export const stPoints = (char: Character) => (char.atts.st - 10) * 10;
@@ -30,3 +30,15 @@ export const moveModPoints = (char: Character) => char.attMods.moveMod * 5;
 export const advantagesTotalPoints = (char: Character) => char.advantages.reduce(
   (totalPoints, adv) => totalPoints + adv.cost, 0
 );
+
+// Skills
+export const skillPoints = (char: Character, skill: Skill) => {
+  return 0;
+};
+export const skillEnergyCost = (char: Character, skill: Skill) => {
+  if (skill.type === SkillType.SPELL) {
+    return 0;
+  } else {
+    return 0;
+  }
+};
