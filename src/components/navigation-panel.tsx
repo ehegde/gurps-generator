@@ -1,11 +1,7 @@
 import {
   SideNavigation,
-  SideNavigationProps,
 } from "@cloudscape-design/components";
-import { useNavigationPanelState } from "../common/hooks/use-navigation-panel-state";
-import { useState } from "react";
 import { useOnFollow } from "../common/hooks/use-on-follow";
-import { APP_NAME } from "../common/constants";
 import { useLocation } from "react-router-dom";
 import { Character } from "../common/types";
 import { advantagesTotalPoints, attModTotalPoints, attTotalPoints, charTotalPoints, skillsTotalPoints } from "../common/helpers/character-points";

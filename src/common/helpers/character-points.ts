@@ -1,5 +1,5 @@
 import { DX_SKILL_TABLE, IQ_SKILL_TABLE } from "../constants";
-import { Advantage, Character, Skill, SkillType } from "../types";
+import { Character, Skill, SkillType } from "../types";
 import { calcSkillLvl } from "./character-outputs";
 
 // Basic attributes

@@ -1,5 +1,3 @@
-import { StatusIndicatorProps } from "@cloudscape-design/components";
-
 export interface NavigationPanelState {
   collapsed?: boolean;
   collapsedSections?: Record<number, boolean>;

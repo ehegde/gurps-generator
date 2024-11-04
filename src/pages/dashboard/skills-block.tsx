@@ -1,21 +1,17 @@
 import {
-  Container,
   Header,
-  ColumnLayout,
   Box,
   Input,
-  Textarea,
   Button,
   Icon,
   Table,
-  Link,
   SpaceBetween,
   Modal,
   FormField,
   Select,
 } from "@cloudscape-design/components";
 import React, { useEffect } from "react";
-import { BlockProps, Skill, SkillDifficulty, SkillType, Att, Character } from "../../common/types";
+import { BlockProps, Skill, SkillDifficulty, SkillType, Att } from "../../common/types";
 import { produce } from "immer";
 import { calcSkillLvl } from "../../common/helpers/character-outputs";
 import { skillEnergyCost, skillPoints } from "../../common/helpers/character-points";
@@ -100,7 +96,7 @@ export default function SkillsBlock(props: BlockProps) {
         ariaLabels={{
           selectionGroupLabel: "Items selection",
           allItemsSelectionLabel: () => "select all",
-          itemSelectionLabel: ({ selectedItems }, item) =>
+          itemSelectionLabel: (_, item) =>
             item.name
         }}
         resizableColumns={true} 

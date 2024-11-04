@@ -4,24 +4,19 @@ import {
   ColumnLayout,
   Box,
   Input,
-  Textarea,
   Button,
   Icon,
   Table,
-  Link,
   SpaceBetween,
   Popover,
   StatusIndicator,
 } from "@cloudscape-design/components";
-import React from "react";
 import { BlockProps } from "../../common/types";
 import { produce } from "immer";
-import { dmgModPoints, dxPoints, hpModPoints, htPoints, iqPoints, moveModPoints, perModPoints, speedModPoints, stPoints, willModPoints } from "../../common/helpers/character-points";
+import { dxPoints, hpModPoints, htPoints, iqPoints, moveModPoints, perModPoints, speedModPoints, stPoints, willModPoints } from "../../common/helpers/character-points";
 import { calcDmg, calcHp, calcMove, calcPer, calcSpeed, calcWill } from "../../common/helpers/character-outputs";
 
 export default function AttributesBlock(props: BlockProps) {
-  const [value, setValue] = React.useState("");
-
   return (
     <Container header={<Header variant="h2"><Icon name="gen-ai" /> Attributes</Header>}>
       <SpaceBetween direction="vertical" size="s">

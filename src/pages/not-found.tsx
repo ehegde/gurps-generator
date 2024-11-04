@@ -9,12 +9,14 @@ import {
 import { useOnFollow } from "../common/hooks/use-on-follow";
 import { APP_NAME } from "../common/constants";
 import BaseAppLayout from "../components/base-app-layout";
+import { BlockProps } from "../common/types";
 
-export default function NotFound() {
+export default function NotFound(props: Omit<BlockProps, 'setCharacter'>) {
   const onFollow = useOnFollow();
 
   return (
     <BaseAppLayout
+      character={props.character}
       breadcrumbs={
         <BreadcrumbGroup
           onFollow={onFollow}

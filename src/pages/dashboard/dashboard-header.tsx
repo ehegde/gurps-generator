@@ -1,6 +1,4 @@
-import { Header, SpaceBetween } from "@cloudscape-design/components";
-import RouterButton from "../../components/wrappers/router-button";
-import RouterButtonDropdown from "../../components/wrappers/router-button-dropdown";
+import { Header } from "@cloudscape-design/components";
 
 export default function DashboardHeader() {
   return (

@@ -3,14 +3,13 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  useLocation,
 } from "react-router-dom";
 import { DEFAULT_CHARACTER, USE_BROWSER_ROUTER } from "./common/constants";
 import GlobalHeader from "./components/global-header";
 import DashboardPage from "./pages/dashboard/dashboard-page";
 import NotFound from "./pages/not-found";
 import "./styles/app.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Character } from "./common/types";
 
 export default function App() {
@@ -28,7 +27,7 @@ export default function App() {
             <Route index path="/" element={
               <DashboardPage character={character} setCharacter={setCharacter} />
             } />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFound character={character} />} />
           </Routes>
         </div>
       </Router>

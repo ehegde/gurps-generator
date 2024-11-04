@@ -1,21 +1,13 @@
 import {
-  Container,
   Header,
-  ColumnLayout,
   Box,
-  Input,
-  Textarea,
-  Button,
   Icon,
   Table,
-  Link,
   SpaceBetween,
 } from "@cloudscape-design/components";
 import React from "react";
-import { SkillType } from "../../common/types";
 
 export default function RangedBlock() {
-  const [value, setValue] = React.useState("");
   const [
     selectedItems,
     setSelectedItems

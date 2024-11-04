@@ -1,14 +1,10 @@
 import {
-  Container,
   Header,
-  ColumnLayout,
   Box,
   Input,
-  Textarea,
   Button,
   Icon,
   Table,
-  Link,
   SpaceBetween,
   Modal,
   FormField,
@@ -93,7 +89,7 @@ export default function ItemsBlock(props: BlockProps) {
         ariaLabels={{
           selectionGroupLabel: "Items selection",
           allItemsSelectionLabel: () => "select all",
-          itemSelectionLabel: ({ selectedItems }, item) =>
+          itemSelectionLabel: (_, item) =>
             item.name
         }}
         resizableColumns={true} 

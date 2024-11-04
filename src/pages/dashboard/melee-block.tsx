@@ -1,20 +1,16 @@
 import {
-  Container,
   Header,
-  ColumnLayout,
   Box,
   Input,
-  Textarea,
   Button,
   Icon,
   Table,
-  Link,
   SpaceBetween,
   FormField,
   Modal,
 } from "@cloudscape-design/components";
 import React, { useEffect } from "react";
-import { BlockProps, MeleeWeapon, SkillType } from "../../common/types";
+import { BlockProps, MeleeWeapon } from "../../common/types";
 import { produce } from "immer";
 
 
@@ -98,7 +94,7 @@ export default function MeleeBlock(props: BlockProps) {
         ariaLabels={{
           selectionGroupLabel: "Items selection",
           allItemsSelectionLabel: () => "select all",
-          itemSelectionLabel: ({ selectedItems }, item) =>
+          itemSelectionLabel: (_, item) =>
             item.name
         }}
         resizableColumns={true} 

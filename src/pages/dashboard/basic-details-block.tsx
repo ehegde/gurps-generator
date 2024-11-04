@@ -5,16 +5,12 @@ import {
   Box,
   Input,
   Textarea,
-  Button,
   Icon,
 } from "@cloudscape-design/components";
-import React from "react";
 import { BlockProps } from "../../common/types";
 import { produce } from "immer";
 
 export default function BasicDetailsBlock(props: BlockProps) {
-  const [value, setValue] = React.useState("");
-
   return (
     <Container header={<Header variant="h2"><Icon name="user-profile" /> Basic Details</Header>}>
       <ColumnLayout columns={2} variant="text-grid">

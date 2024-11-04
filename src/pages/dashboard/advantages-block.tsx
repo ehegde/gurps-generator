@@ -1,14 +1,10 @@
 import {
-  Container,
   Header,
-  ColumnLayout,
   Box,
   Input,
-  Textarea,
   Button,
   Icon,
   Table,
-  Link,
   SpaceBetween,
   Modal,
   Select,
@@ -94,7 +90,7 @@ export default function AdvantagesBlock(props: BlockProps) {
         ariaLabels={{
           selectionGroupLabel: "Items selection",
           allItemsSelectionLabel: () => "select all",
-          itemSelectionLabel: ({ selectedItems }, item) => item.name
+          itemSelectionLabel: (_, item) => item.name
         }}
         resizableColumns={true} 
         columnDefinitions={[
