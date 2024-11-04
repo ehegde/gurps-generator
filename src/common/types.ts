@@ -38,7 +38,7 @@ export interface Skill extends Omit<Factor, 'cost'> { // point cost is calculate
   type: SkillType,
   att: Att,
   attMod: number; // affects point cost
-  defaultMod: number; // does not affect point cost
+  otherMod: number; // does not affect point cost
   difficulty: SkillDifficulty;
 }
 
@@ -69,7 +69,7 @@ export enum SkillDifficulty {
   EASY = 'Easy',
   AVERAGE = 'Avg',
   HARD = 'Hard',
-  VERY_HARD = 'Very Hard'
+  VERY_HARD = 'VeryHard'
 }
 
 export interface Character {

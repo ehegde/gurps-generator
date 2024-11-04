@@ -1,5 +1,5 @@
 import { DAMAGE_TABLE } from "../constants";
-import { Character, Skill } from "../types";
+import { Character, Skill, SkillType } from "../types";
 
 // Secondary attributes
 export const calcDmg = (char: Character) => {
@@ -15,5 +15,7 @@ export const calcSpeed = (char: Character) => ((char.atts.ht + char.atts.dx) / 4
 export const calcMove = (char: Character) => Math.floor(calcSpeed(char)) + char.attMods.moveMod;
 
 // Factors
-export const calcSkillLvl = (char: Character, skill: Skill) =>
-  char.atts[skill.att] + skill.attMod + skill.defaultMod;
+export const calcSkillLvl = (char: Character, skill: Skill) => {
+  const mageryBonus = skill.type === SkillType.SPELL ? char.attMods.mageryBonus : 0;
+  return char.atts[skill.att] + skill.attMod + skill.otherMod + mageryBonus;
+}

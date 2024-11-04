@@ -44,7 +44,7 @@ export default function SkillsBlock(props: BlockProps) {
         type: SkillType.SKILL,
         att: 'dx',
         attMod: 0,
-        defaultMod: 0,
+        otherMod: 0,
         difficulty: SkillDifficulty.AVERAGE
       });
     }));
@@ -119,7 +119,7 @@ export default function SkillsBlock(props: BlockProps) {
           {
             id: "adj",
             header: "Skill Lvl",
-            cell: e => `${e.att.toUpperCase()}+${e.attMod} (Def: ${e.defaultMod})`,
+            cell: e => `${e.att.toUpperCase()}+${e.attMod}`,
           },
           {
             id: "lvl",
@@ -129,7 +129,7 @@ export default function SkillsBlock(props: BlockProps) {
           {
             id: "cost",
             header: "Point Cost",
-            cell: e => `${skillPoints(props.character, e)}`
+            cell: e => `${skillPoints(e)}`
           },
           {
             id: "enery",
@@ -194,7 +194,7 @@ function SkillEditModal(props: SkillEditModalProps) {
     type: SkillType.SKILL,
     att: 'dx',
     attMod: 0,
-    defaultMod: 0,
+    otherMod: 0,
     difficulty: SkillDifficulty.AVERAGE
   });
 
@@ -269,12 +269,12 @@ function SkillEditModal(props: SkillEditModalProps) {
             })}
           />
         </FormField>
-        <FormField label="Default Mod">
+        <FormField label="Other (Free) Adjustment">
           <Input
-            value={`${editItem.defaultMod}`}
+            value={`${editItem.otherMod}`}
             type="number"
             onChange={({ detail }) => setEditItem({
-              ...editItem, defaultMod: Number(detail.value)
+              ...editItem, otherMod: Number(detail.value)
             })}
           />
         </FormField>

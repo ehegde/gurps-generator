@@ -1,4 +1,6 @@
+import { DX_SKILL_TABLE, IQ_SKILL_TABLE } from "../constants";
 import { Advantage, Character, Skill, SkillType } from "../types";
+import { calcSkillLvl } from "./character-outputs";
 
 // Basic attributes
 export const stPoints = (char: Character) => (char.atts.st - 10) * 10;
@@ -32,13 +34,33 @@ export const advantagesTotalPoints = (char: Character) => char.advantages.reduce
 );
 
 // Skills
-export const skillPoints = (char: Character, skill: Skill) => {
-  return 0;
+export const skillPoints = (skill: Skill) => {
+  const table = (skill.att === 'iq') ? IQ_SKILL_TABLE : DX_SKILL_TABLE;
+
+  return table[skill.attMod]
+    ? table[skill.attMod][skill.difficulty] // normal level within the table specifications
+    : table.linear[skill.difficulty](skill.attMod); // higher level scaling linearly
 };
+
+export const skillsTotalPoints = (char: Character) => char.skills.reduce(
+  (totalPoints, skill) => totalPoints + skillPoints(skill), 0
+);
+
 export const skillEnergyCost = (char: Character, skill: Skill) => {
+  const lvl = calcSkillLvl(char, skill);
+
   if (skill.type === SkillType.SPELL) {
-    return 0;
+    // Homebrew rule: energy cost decreases with spell level
+    // Default energy = 3, then 2 if lvl 15+, then 1 if lvl 20+
+    if (lvl < 15) {
+      return 3;
+    } else if (lvl < 20) {
+      return 2;
+    } else {
+      return 1;
+    }
   } else {
+    // No energy cost for non-spells
     return 0;
   }
 };
