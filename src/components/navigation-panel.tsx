@@ -6,7 +6,7 @@ import { useOnFollow } from "../common/hooks/use-on-follow";
 import { useLocation } from "react-router-dom";
 import { Character } from "../common/types";
 import { advantagesTotalPoints, attModTotalPoints, attTotalPoints, charTotalPoints, skillsTotalPoints } from "../common/helpers/character-points";
-import { getCharacterSheetHTML } from "../common/helpers/character-outputs";
+import { getCharacterSheetHTML } from "../common/helpers/character-sheet";
 
 interface NavigationPanelProps {
   character: Character;
