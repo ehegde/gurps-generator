@@ -30,10 +30,6 @@ export default function GlobalHeader() {
             type: "button",
             text: theme === Mode.Dark ? "Light Mode" : "Dark Mode",
             onClick: onChangeThemeClick,
-          },
-          {
-            type: "button",
-            text: `Total Points: ${0}`
           }
         ]}
       />

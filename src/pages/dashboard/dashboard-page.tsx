@@ -42,6 +42,7 @@ export default function DashboardPage(props: BlockProps) {
 
   return (
     <BaseAppLayout
+      character={props.character}
       breadcrumbs={
         <BreadcrumbGroup
           onFollow={onFollow}

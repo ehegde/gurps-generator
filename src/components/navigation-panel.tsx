@@ -8,6 +8,7 @@ import { useOnFollow } from "../common/hooks/use-on-follow";
 import { APP_NAME } from "../common/constants";
 import { useLocation } from "react-router-dom";
 import { Character } from "../common/types";
+import { advantagesTotalPoints, attModTotalPoints, attTotalPoints, charTotalPoints, skillsTotalPoints } from "../common/helpers/character-points";
 
 interface NavigationPanelProps {
   character: Character
@@ -16,66 +17,47 @@ interface NavigationPanelProps {
 export default function NavigationPanel(props: NavigationPanelProps) {
   const location = useLocation();
   const onFollow = useOnFollow();
-  const [navigationPanelState, setNavigationPanelState] =
-    useNavigationPanelState();
-
-  const [items] = useState<SideNavigationProps.Item[]>(() => {
-    const items: SideNavigationProps.Item[] = [
-      {
-        type: "section",
-        text: "Character Creator",
-        items: [
-          { type: "link", text: "Import/Export Character", href: "/#import-export-block" },
-          { type: "link", text: "Basic Details", href: "/#basic-details-block" },
-          { type: "link", text: "Attributes", href: "/#attributes-block" },
-          { type: "link", text: "Advantages, Disadvantages, Perks, Quirks", href: "/#advantages-block" },
-          { type: "link", text: "Reactions", href: "/#reactions-block" },
-          { type: "link", text: "Skills and Spells", href: "/#skills-block" },
-          { type: "link", text: "Melee Weapons", href: "/#melee-block" },
-          { type: "link", text: "Ranged Weapons", href: "/#ranged-block" },
-          { type: "link", text: "Items", href: "/#items-block" },
-          { type: "link", text: "Armor and Shields", href: "/#armor-block" },
-        ],
-      },
-      {
-        type: "section",
-        text: "Character Sheet",
-        items: [{ type: "link", text: "View Character Sheet", href: "/sheet" }],
-      }
-    ];
-
-    return items;
-  });
-
-  const onChange = ({
-    detail,
-  }: {
-    detail: SideNavigationProps.ChangeDetail;
-  }) => {
-    const sectionIndex = items.indexOf(detail.item);
-    setNavigationPanelState({
-      collapsedSections: {
-        ...navigationPanelState.collapsedSections,
-        [sectionIndex]: !detail.expanded,
-      },
-    });
-  };
 
   return (
     <SideNavigation
       onFollow={onFollow}
-      onChange={onChange}
-      header={{ href: "/", text: `Total Points: ${0}` }}
+      header={{ href: "/", text: `Total Points: ${charTotalPoints(props.character)}` }}
       activeHref={location.pathname}
-      items={items.map((value, idx) => {
-        if (value.type === "section") {
-          const collapsed =
-            navigationPanelState.collapsedSections?.[idx] === true;
-          value.defaultExpanded = !collapsed;
+      items={[
+        {
+          type: "section",
+          text: "Character Creator",
+          items: [
+            { type: "link", text: "Import/Export Character", href: "/#import-export-block" },
+            { type: "link", text: "Basic Details", href: "/#basic-details-block" },
+            {
+              type: "link",
+              text: `[${attTotalPoints(props.character) + attModTotalPoints(props.character)}] Attributes`,
+              href: "/#attributes-block"
+            },
+            {
+              type: "link",
+              text: `[${advantagesTotalPoints(props.character)}] Advantages, Disadvantages, Perks, Quirks`,
+              href: "/#advantages-block"
+            },
+            { type: "link", text: "Reactions", href: "/#reactions-block" },
+            {
+              type: "link",
+              text: `[${skillsTotalPoints(props.character)}] Skills and Spells`,
+              href: "/#skills-block"
+            },
+            { type: "link", text: "Melee Weapons", href: "/#melee-block" },
+            { type: "link", text: "Ranged Weapons", href: "/#ranged-block" },
+            { type: "link", text: "Items", href: "/#items-block" },
+            { type: "link", text: "Armor and Shields", href: "/#armor-block" },
+          ],
+        },
+        {
+          type: "section",
+          text: "Character Sheet",
+          items: [{ type: "link", text: "View Character Sheet", href: "/sheet" }],
         }
-
-        return value;
-      })}
+      ]}
     />
   );
 }
