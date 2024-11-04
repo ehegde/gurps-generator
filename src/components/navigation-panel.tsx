@@ -1,18 +1,30 @@
 import {
+  Button,
   SideNavigation,
 } from "@cloudscape-design/components";
 import { useOnFollow } from "../common/hooks/use-on-follow";
 import { useLocation } from "react-router-dom";
 import { Character } from "../common/types";
 import { advantagesTotalPoints, attModTotalPoints, attTotalPoints, charTotalPoints, skillsTotalPoints } from "../common/helpers/character-points";
+import { getCharacterSheetHTML } from "../common/helpers/character-outputs";
 
 interface NavigationPanelProps {
-  character: Character
+  character: Character;
 }
 
 export default function NavigationPanel(props: NavigationPanelProps) {
   const location = useLocation();
   const onFollow = useOnFollow();
+
+  const downloadHTML = () => {
+    const element = document.createElement("a");
+    const file = new Blob([getCharacterSheetHTML(props.character)], { type: 'text/html' });
+    element.href = URL.createObjectURL(file);
+    element.download = `GURPS-${props.character.bio.name}.html`;
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }
 
   return (
     <SideNavigation
@@ -29,7 +41,7 @@ export default function NavigationPanel(props: NavigationPanelProps) {
             {
               type: "link",
               text: `[${attTotalPoints(props.character) + attModTotalPoints(props.character)}] Attributes`,
-              href: "/#attributes-block"
+              href: "/#attributes-block",
             },
             {
               type: "link",
@@ -51,7 +63,12 @@ export default function NavigationPanel(props: NavigationPanelProps) {
         {
           type: "section",
           text: "Character Sheet",
-          items: [{ type: "link", text: "View Character Sheet", href: "/sheet" }],
+          items: [{
+            type: "link",
+            text: "",
+            href: "/sheet",
+            info: <Button onClick={() => downloadHTML()}>Download HTML</Button>
+          }],
         }
       ]}
     />
