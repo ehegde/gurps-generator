@@ -21,7 +21,7 @@ export default function App() {
           <Routes>
             <Route
               index
-              path="/"
+              path="*"
               element={
                 <DashboardPage
                   character={character}
@@ -29,7 +29,7 @@ export default function App() {
                 />
               }
             />
-            <Route path="*" element={<NotFound character={character} />} />
+            {/* <Route path="*" element={<NotFound character={character} />} /> */}
           </Routes>
         </div>
       </Router>
