@@ -24,17 +24,21 @@ interface ReactionEditModalProps {
 }
 
 export default function ReactionsBlock(props: BlockProps) {
-  const [selectedItems, setSelectedItems] = React.useState<ReactionTableItem[]>([]);
+  const [selectedItems, setSelectedItems] = React.useState<ReactionTableItem[]>(
+    [],
+  );
   const [editModalVisible, setEditModalVisble] = React.useState(false);
 
   const handleCreate = () => {
     // Add default reaction
-    props.setCharacter(produce(props.character, next => {
-      next.reactions.push({
-        name: `New Reaction ${props.character.reactions.length + 1}`,
-        cost: 0
-      });
-    }));
+    props.setCharacter(
+      produce(props.character, (next) => {
+        next.reactions.push({
+          name: `New Reaction ${props.character.reactions.length + 1}`,
+          cost: 0,
+        });
+      }),
+    );
   };
 
   const handleEditOpen = () => {
@@ -52,87 +56,85 @@ export default function ReactionsBlock(props: BlockProps) {
   const handleEditSave = (item: ReactionTableItem) => {
     // Save a reaction edited in the edit modal
     handleEditClose();
-    props.setCharacter(produce(props.character, next => {
-      const { index, ...data } = item;
-      next.reactions[index] = data;
-    }));
+    props.setCharacter(
+      produce(props.character, (next) => {
+        const { index, ...data } = item;
+        next.reactions[index] = data;
+      }),
+    );
   };
 
   const handleDelete = () => {
     // Delete selected reaction
     if (selectedItems.length == 1) {
-      props.setCharacter(produce(props.character, next => {
-        next.reactions.splice(selectedItems[0].index, 1);
-      }));
+      props.setCharacter(
+        produce(props.character, (next) => {
+          next.reactions.splice(selectedItems[0].index, 1);
+        }),
+      );
     }
   };
 
   return (
     <div>
       <Table
-        renderAriaLive={({
-          firstIndex,
-          lastIndex,
-          totalItemsCount
-        }) =>
+        renderAriaLive={({ firstIndex, lastIndex, totalItemsCount }) =>
           `Displaying items ${firstIndex} to ${lastIndex} of ${totalItemsCount}`
         }
-        onSelectionChange={({ detail }) =>
-          {
-            setSelectedItems(detail.selectedItems)
-            console.log(detail.selectedItems);
-          }
-        }
+        onSelectionChange={({ detail }) => {
+          setSelectedItems(detail.selectedItems);
+          console.log(detail.selectedItems);
+        }}
         selectedItems={selectedItems}
         ariaLabels={{
           selectionGroupLabel: "Items selection",
           allItemsSelectionLabel: () => "select all",
-          itemSelectionLabel: (_, item) =>
-            item.name
+          itemSelectionLabel: (_, item) => item.name,
         }}
-        resizableColumns={true} 
+        resizableColumns={true}
         columnDefinitions={[
           {
             id: "name",
             header: "Name",
-            cell: e => e.name,
-            isRowHeader: true
+            cell: (e) => e.name,
+            isRowHeader: true,
           },
           {
             id: "val",
             header: "Value",
-            cell: e => `${e.cost}`,
-            isRowHeader: true
-          }
+            cell: (e) => `${e.cost}`,
+            isRowHeader: true,
+          },
         ]}
         enableKeyboardNavigation
-        items={
-          props.character.reactions.map((val, index) => ({ ...val, index }))
-        }
+        items={props.character.reactions.map((val, index) => ({
+          ...val,
+          index,
+        }))}
         loadingText="Loading resources"
         selectionType="single"
         trackBy="index"
         empty={
-          <Box
-            margin={{ vertical: "xs" }}
-            textAlign="center"
-            color="inherit"
-          >
+          <Box margin={{ vertical: "xs" }} textAlign="center" color="inherit">
             <SpaceBetween size="m">
               <b>No resources</b>
             </SpaceBetween>
           </Box>
         }
         header={
-            <Header actions={
+          <Header
+            actions={
               <SpaceBetween direction="horizontal" size="m">
-                <Button variant="primary" onClick={() => handleCreate()}>Create</Button>
+                <Button variant="primary" onClick={() => handleCreate()}>
+                  Create
+                </Button>
                 <Button onClick={() => handleEditOpen()}>Edit</Button>
                 <Button onClick={() => handleDelete()}>Delete</Button>
               </SpaceBetween>
-            }>
-              <Icon name="star"></Icon> Reactions
-            </Header>
+            }
+          >
+            <Icon name="star"></Icon> Reactions
+          </Header>
         }
       />
       <ReactionEditModal
@@ -146,11 +148,13 @@ export default function ReactionsBlock(props: BlockProps) {
 }
 
 function ReactionEditModal(props: ReactionEditModalProps) {
-  const [editItem, setEditItem] = React.useState<ReactionTableItem>(props.item ?? {
-    index: -1,
-    name: "",
-    cost: 0,
-  });
+  const [editItem, setEditItem] = React.useState<ReactionTableItem>(
+    props.item ?? {
+      index: -1,
+      name: "",
+      cost: 0,
+    },
+  );
 
   useEffect(() => {
     if (props.item) {
@@ -165,8 +169,15 @@ function ReactionEditModal(props: ReactionEditModalProps) {
       footer={
         <Box float="right">
           <SpaceBetween direction="horizontal" size="xs">
-            <Button variant="link" onClick={() => props.handleClose()}>Cancel</Button>
-            <Button variant="primary" onClick={() => props.handleSave(editItem)}>Save</Button>
+            <Button variant="link" onClick={() => props.handleClose()}>
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => props.handleSave(editItem)}
+            >
+              Save
+            </Button>
           </SpaceBetween>
         </Box>
       }
@@ -176,18 +187,24 @@ function ReactionEditModal(props: ReactionEditModalProps) {
         <FormField label="Name">
           <Input
             value={editItem.name}
-            onChange={({ detail }) => setEditItem({
-              ...editItem, name: detail.value
-            })}
+            onChange={({ detail }) =>
+              setEditItem({
+                ...editItem,
+                name: detail.value,
+              })
+            }
           />
         </FormField>
         <FormField label="Value">
           <Input
             value={`${editItem.cost}`}
             type="number"
-            onChange={({ detail }) => setEditItem({
-              ...editItem, cost: Number(detail.value)
-            })}
+            onChange={({ detail }) =>
+              setEditItem({
+                ...editItem,
+                cost: Number(detail.value),
+              })
+            }
           />
         </FormField>
       </SpaceBetween>

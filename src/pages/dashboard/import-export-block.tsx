@@ -6,7 +6,7 @@ import {
   Textarea,
   Button,
   SpaceBetween,
-  Icon
+  Icon,
 } from "@cloudscape-design/components";
 import React from "react";
 import { BlockProps } from "../../common/types";
@@ -15,7 +15,13 @@ export default function ImportExportBlock(props: BlockProps) {
   const [importJson, setImportJson] = React.useState("{}");
 
   return (
-    <Container header={<Header variant="h2"><Icon name="file" /> Import/Export Character</Header>}>
+    <Container
+      header={
+        <Header variant="h2">
+          <Icon name="file" /> Import/Export Character
+        </Header>
+      }
+    >
       <ColumnLayout columns={2} variant="text-grid">
         <div>
           <SpaceBetween direction="vertical" size="xs">
@@ -25,7 +31,9 @@ export default function ImportExportBlock(props: BlockProps) {
               value={importJson}
               placeholder="{}"
             />
-            <Button onClick={() => props.setCharacter(JSON.parse(importJson))}>Import</Button>
+            <Button onClick={() => props.setCharacter(JSON.parse(importJson))}>
+              Import
+            </Button>
           </SpaceBetween>
         </div>
         <div>

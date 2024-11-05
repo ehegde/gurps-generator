@@ -19,7 +19,7 @@ export abstract class StorageHelper {
 
     document.documentElement.style.setProperty(
       "--app-color-scheme",
-      theme === Mode.Dark ? "dark" : "light"
+      theme === Mode.Dark ? "dark" : "light",
     );
 
     return theme;

@@ -32,42 +32,43 @@ export interface MeleeWeapon extends Factor {
   parry: string;
 }
 
-export interface Skill extends Omit<Factor, 'cost'> { // point cost is calculated for skills, not user input
-  type: SkillType,
-  att: Att,
+export interface Skill extends Omit<Factor, "cost"> {
+  // point cost is calculated for skills, not user input
+  type: SkillType;
+  att: Att;
   attMod: number; // affects point cost
   otherMod: number; // does not affect point cost
   difficulty: SkillDifficulty;
 }
 
 export enum ArmorPiece {
-  ALL = 'All',
-  HEAD = 'Head',
-  BODY = 'Body',
-  ARMS = 'Arms',
-  LEGS = 'Legs',
-  HANDS = 'Hands',
-  FEET = 'Feet'
+  ALL = "All",
+  HEAD = "Head",
+  BODY = "Body",
+  ARMS = "Arms",
+  LEGS = "Legs",
+  HANDS = "Hands",
+  FEET = "Feet",
 }
 
 export enum AdvantageType {
-  ADVANTAGE = 'Advantage',
-  PERK = 'Perk',
-  QUIRK = 'Quirk',
-  DISADVANTAGE = 'Disadvantage',
-  ADJUSTER = 'Adjuster' // for correcting values outside of the assumptions of this program
+  ADVANTAGE = "Advantage",
+  PERK = "Perk",
+  QUIRK = "Quirk",
+  DISADVANTAGE = "Disadvantage",
+  ADJUSTER = "Adjuster", // for correcting values outside of the assumptions of this program
 }
 
 export enum SkillType {
-  SKILL = 'Skill',
-  SPELL = 'Spell'
+  SKILL = "Skill",
+  SPELL = "Spell",
 }
 
 export enum SkillDifficulty {
-  EASY = 'Easy',
-  AVERAGE = 'Avg',
-  HARD = 'Hard',
-  VERY_HARD = 'VeryHard'
+  EASY = "Easy",
+  AVERAGE = "Avg",
+  HARD = "Hard",
+  VERY_HARD = "VeryHard",
 }
 
 export interface Character {
@@ -105,7 +106,7 @@ export interface Character {
   skills: Skill[];
 }
 
-export type Att = keyof Character['atts'];
+export type Att = keyof Character["atts"];
 
 export interface BlockProps {
   character: Character;

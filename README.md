@@ -1,30 +1,13 @@
-# Basic Cloudscape App
+# GURPS 3E Homebrew Character Generator
 
-[https://cloudscape.design/](https://cloudscape.design/)
-
-Cloudscape is an open source design system for the cloud. Cloudscape offers user interface guidelines, front-end components, design resources, and development tools for building intuitive, engaging, and inclusive user experiences at scale.
-
-
-![sample](../assets/basic-vite.png "Screenshot")
-
-
-## Vite.js
-
-[https://vitejs.dev/](https://vitejs.dev/)
-
-Vite.js is a modern, fast front-end build tool that significantly improves the developer experience when building web applications. 
+A GURPS 3E/4E hybrid character generator based on homebrew rules for a campaign I participated in.
 
 ## Development
-1. Clone this repository to your local machine
-```bash
-git clone https://github.com/aws-samples/cloudscape-examples
-cd cloudscape-examples/basic-vite
-```
-2. Install the project dependencies by running:
+1. Install the project dependencies by running:
 ```bash
 npm install
 ```
-3. To start the development server, run:
+2. To start the development server, run:
 ```bash
 npm run dev
 ```

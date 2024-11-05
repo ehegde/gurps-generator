@@ -3,7 +3,9 @@ import { useNavigationPanelState } from "../common/hooks/use-navigation-panel-st
 import NavigationPanel from "./navigation-panel";
 import { BlockProps } from "../common/types";
 
-export default function BaseAppLayout(props: AppLayoutProps & Omit<BlockProps, 'setCharacter'>) {
+export default function BaseAppLayout(
+  props: AppLayoutProps & Omit<BlockProps, "setCharacter">,
+) {
   const [navigationPanelState, setNavigationPanelState] =
     useNavigationPanelState();
 

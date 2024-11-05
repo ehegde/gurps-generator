@@ -1,6 +1,31 @@
 import { AdvantageType, Character } from "../types";
-import { calcDmg, calcHp, calcMove, calcPer, calcSpeed, calcWill, calcSkillLvl } from "./character-outputs";
-import { advantagesTotalPoints, attModTotalPoints, attTotalPoints, charTotalPoints, dxPoints, hpModPoints, htPoints, iqPoints, moveModPoints, perModPoints, skillEnergyCost, skillPoints, skillsTotalPoints, speedModPoints, stPoints, willModPoints } from "./character-points";
+import {
+  calcDmg,
+  calcHp,
+  calcMove,
+  calcPer,
+  calcSpeed,
+  calcWill,
+  calcSkillLvl,
+} from "./character-outputs";
+import {
+  advantagesTotalPoints,
+  attModTotalPoints,
+  attTotalPoints,
+  charTotalPoints,
+  dxPoints,
+  hpModPoints,
+  htPoints,
+  iqPoints,
+  moveModPoints,
+  perModPoints,
+  skillEnergyCost,
+  skillPoints,
+  skillsTotalPoints,
+  speedModPoints,
+  stPoints,
+  willModPoints,
+} from "./character-points";
 
 // Generate HTML Character Sheet
 export const getCharacterSheetHTML = (char: Character) => {
@@ -338,19 +363,22 @@ export const getCharacterSheetHTML = (char: Character) => {
                   </thead>
                   <tbody>
                     ${char.advantages
-                      .filter((adv) => [
-                        AdvantageType.ADVANTAGE,
-                        AdvantageType.PERK,
-                        AdvantageType.ADJUSTER
-                      ].includes(adv.type))
-                      .map((adv, index) => `
+                      .filter((adv) =>
+                        [
+                          AdvantageType.ADVANTAGE,
+                          AdvantageType.PERK,
+                          AdvantageType.ADJUSTER,
+                        ].includes(adv.type),
+                      )
+                      .map(
+                        (adv, index) => `
                         <tr class=${index % 2 === 0 ? "" : "field-list__shaded"}>
                           <td class="has-text-left field__value">${adv.name}</td>
                           <td class="has-text-left field__value">${adv.notes ?? ""}</td>
                           <td class="has-text-center field__cost">${adv.cost}</td>
                         </tr>
-                      `)
-                    }
+                      `,
+                      )}
                     <tr class="field-list__footnotes-separator">
                       <td class="has-text-left field__value"></td>
                       <td class="has-text-center field__value"></td>
@@ -373,18 +401,21 @@ export const getCharacterSheetHTML = (char: Character) => {
                   </thead>
                   <tbody>
                   ${char.advantages
-                    .filter((adv) => [
-                      AdvantageType.DISADVANTAGE,
-                      AdvantageType.QUIRK
-                    ].includes(adv.type))
-                    .map((adv, index) => `
+                    .filter((adv) =>
+                      [
+                        AdvantageType.DISADVANTAGE,
+                        AdvantageType.QUIRK,
+                      ].includes(adv.type),
+                    )
+                    .map(
+                      (adv, index) => `
                       <tr class=${index % 2 === 0 ? "" : "field-list__shaded"}>
                         <td class="has-text-left field__value">${adv.name}</td>
                         <td class="has-text-left field__value">${adv.notes ?? ""}</td>
                         <td class="has-text-center field__cost">${adv.cost}</td>
                       </tr>
-                    `)
-                  }
+                    `,
+                    )}
                     <tr class="field-list__footnotes-separator">
                       <td class="has-text-left field__value"></td>
                       <td class="has-text-center field__value"></td>
@@ -417,7 +448,8 @@ export const getCharacterSheetHTML = (char: Character) => {
                     </tr>
                   </thead>
                   <tbody>
-                  ${char.skills.map((skill, index) => `
+                  ${char.skills.map(
+                    (skill, index) => `
                       <tr class=${index % 2 === 0 ? "" : "field-list__shaded"}>
                         <td class="has-text-left field__value">${skill.name}</td>
                         <td class="has-text-left field__value">${skill.att.toUpperCase()}+${skill.attMod} (${calcSkillLvl(char, skill)})</td>
@@ -425,8 +457,8 @@ export const getCharacterSheetHTML = (char: Character) => {
                         <td class="has-text-left field__value">${skill.notes ?? ""}</td>
                         <td class="has-text-center field__cost">${skillPoints(skill)}</td>
                       </tr>
-                    `)
-                  }
+                    `,
+                  )}
                   <!---->
                   </tbody>
                 </table>
@@ -477,7 +509,8 @@ export const getCharacterSheetHTML = (char: Character) => {
                     </tr>
                   </thead>
                   <tbody>
-                    ${char.meleeWeapons.map((wep, index) => `
+                    ${char.meleeWeapons.map(
+                      (wep, index) => `
                       <tr class=${index % 2 === 0 ? "" : "field-list__shaded"}>
                         <td class="has-text-left field__value">${wep.name}</td>
                         <td class="has-text-center field__value">${wep.qty}</td>
@@ -488,7 +521,8 @@ export const getCharacterSheetHTML = (char: Character) => {
                         <td class="has-text-right has-border-left field__value">$${wep.cost}</td>
                         <td class="has-text-right field__value">0</td>
                       </tr>
-                    `)}
+                    `,
+                    )}
                     <!---->
                   </tbody>
                 </table>
@@ -701,16 +735,18 @@ export const getCharacterSheetHTML = (char: Character) => {
                     </tr>
                   </thead>
                   <tbody>
-                    ${char.armors.map((armor, index) => `
+                    ${char.armors.map(
+                      (armor, index) => `
                       <tr class=${index % 2 === 0 ? "" : "field-list__shaded"}>
                         <td class="has-text-left field__value">${armor.name} (DR ${armor.dr})</td>
                         <td class="has-text-center field__value"></td>
-                        <td class="has-text-center field__value">${armor.locations.join(',')}</td>
+                        <td class="has-text-center field__value">${armor.locations.join(",")}</td>
                         <td class="has-text-center field__value">${armor.notes ?? ""}</td>
                         <td class="has-text-right has-border-left field__value">$${armor.cost}</td>
                         <td class="has-text-right field__value">0</td>
                       </tr>
-                    `)}
+                    `,
+                    )}
                     <tr class="field-list__footnotes-separator">
                       <td class="has-text-left field__value"></td>
                       <td class="has-text-center field__value"></td>
@@ -718,7 +754,8 @@ export const getCharacterSheetHTML = (char: Character) => {
                       <td class="has-text-right has-border-left field__value"></td>
                       <td class="has-text-right field__value"></td>
                     </tr>
-                    ${char.items.map((item, index) => `
+                    ${char.items.map(
+                      (item, index) => `
                       <tr class=${index % 2 === 0 ? "" : "field-list__shaded"}>
                         <td class="has-text-left field__value">${item.name}</td>
                         <td class="has-text-center field__value">${item.qty}</td>
@@ -727,7 +764,8 @@ export const getCharacterSheetHTML = (char: Character) => {
                         <td class="has-text-right has-border-left field__value">$${item.cost}</td>
                         <td class="has-text-right field__value">0</td>
                       </tr>
-                    `)}
+                    `,
+                    )}
                     <tr class="field-list__footnotes-separator">
                       <td class="has-text-left field__value"></td>
                       <td class="has-text-center field__value"></td>
@@ -757,7 +795,7 @@ export const getCharacterSheetHTML = (char: Character) => {
             <div class="section section--p2notes">
               <h2 class="title">Character Notes</h2>
               <p style="font-family: var(--values-font-family); min-height: 5em;">
-                ${char.bio.notes.replace(/(?:\r\n|\r|\n)/g, '<br>')}
+                ${char.bio.notes.replace(/(?:\r\n|\r|\n)/g, "<br>")}
               </p>
               <div class="field">
                 <div class="field__label"><span></span>
@@ -774,10 +812,11 @@ export const getCharacterSheetHTML = (char: Character) => {
                 <div class="field__cost">
                   ${advantagesTotalPoints({
                     ...char,
-                    advantages: char.advantages.filter((adv) => [
-                      AdvantageType.ADVANTAGE,
-                      AdvantageType.PERK,
-                    ].includes(adv.type))
+                    advantages: char.advantages.filter((adv) =>
+                      [AdvantageType.ADVANTAGE, AdvantageType.PERK].includes(
+                        adv.type,
+                      ),
+                    ),
                   })}
                 </div>
               </div>
@@ -789,10 +828,12 @@ export const getCharacterSheetHTML = (char: Character) => {
                 <div class="field__cost">
                   ${advantagesTotalPoints({
                     ...char,
-                    advantages: char.advantages.filter((adv) => [
-                      AdvantageType.DISADVANTAGE,
-                      AdvantageType.QUIRK,
-                    ].includes(adv.type))
+                    advantages: char.advantages.filter((adv) =>
+                      [
+                        AdvantageType.DISADVANTAGE,
+                        AdvantageType.QUIRK,
+                      ].includes(adv.type),
+                    ),
                   })}
                 </div>
               </div>
@@ -811,9 +852,9 @@ export const getCharacterSheetHTML = (char: Character) => {
                 <div class="field__cost">
                   ${advantagesTotalPoints({
                     ...char,
-                    advantages: char.advantages.filter((adv) => [
-                      AdvantageType.ADJUSTER,
-                    ].includes(adv.type))
+                    advantages: char.advantages.filter((adv) =>
+                      [AdvantageType.ADJUSTER].includes(adv.type),
+                    ),
                   })}
                 </div>
               </div>
@@ -824,4 +865,4 @@ export const getCharacterSheetHTML = (char: Character) => {
     </body>
     </html>
   `;
-}
+};

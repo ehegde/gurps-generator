@@ -1,9 +1,4 @@
-import {
-  HashRouter,
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { HashRouter, BrowserRouter, Routes, Route } from "react-router-dom";
 import { DEFAULT_CHARACTER, USE_BROWSER_ROUTER } from "./common/constants";
 import GlobalHeader from "./components/global-header";
 import DashboardPage from "./pages/dashboard/dashboard-page";
@@ -24,9 +19,16 @@ export default function App() {
         <div style={{ height: "56px", backgroundColor: "#000716" }}>&nbsp;</div>
         <div>
           <Routes>
-            <Route index path="/" element={
-              <DashboardPage character={character} setCharacter={setCharacter} />
-            } />
+            <Route
+              index
+              path="/"
+              element={
+                <DashboardPage
+                  character={character}
+                  setCharacter={setCharacter}
+                />
+              }
+            />
             <Route path="*" element={<NotFound character={character} />} />
           </Routes>
         </div>

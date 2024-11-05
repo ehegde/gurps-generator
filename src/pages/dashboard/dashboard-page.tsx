@@ -26,12 +26,11 @@ export default function DashboardPage(props: BlockProps) {
   const { pathname, hash, key } = useLocation();
 
   useEffect(() => {
-    if (hash === '') {
+    if (hash === "") {
       window.scrollTo(0, 0);
-    }
-    else {
+    } else {
       setTimeout(() => {
-        const id = hash.replace('#', '');
+        const id = hash.replace("#", "");
         const element = document.getElementById(id);
         if (element) {
           element.scrollIntoView();
@@ -58,32 +57,61 @@ export default function DashboardPage(props: BlockProps) {
         <ContentLayout header={<DashboardHeader />}>
           <SpaceBetween size="l">
             <div id="import-export-block">
-              <ImportExportBlock character={props.character} setCharacter={props.setCharacter} />
+              <ImportExportBlock
+                character={props.character}
+                setCharacter={props.setCharacter}
+              />
             </div>
             <div id="basic-details-block">
-              <BasicDetailsBlock character={props.character} setCharacter={props.setCharacter} />
+              <BasicDetailsBlock
+                character={props.character}
+                setCharacter={props.setCharacter}
+              />
             </div>
             <div id="attributes-block">
-              <AttributesBlock character={props.character} setCharacter={props.setCharacter} />
+              <AttributesBlock
+                character={props.character}
+                setCharacter={props.setCharacter}
+              />
             </div>
             <div id="advantages-block">
-              <AdvantagesBlock character={props.character} setCharacter={props.setCharacter} />
+              <AdvantagesBlock
+                character={props.character}
+                setCharacter={props.setCharacter}
+              />
             </div>
             <div id="reactions-block">
-              <ReactionsBlock character={props.character} setCharacter={props.setCharacter} />
+              <ReactionsBlock
+                character={props.character}
+                setCharacter={props.setCharacter}
+              />
             </div>
             <div id="skills-block">
-              <SkillsBlock character={props.character} setCharacter={props.setCharacter} />
+              <SkillsBlock
+                character={props.character}
+                setCharacter={props.setCharacter}
+              />
             </div>
             <div id="melee-block">
-              <MeleeBlock character={props.character} setCharacter={props.setCharacter} />
+              <MeleeBlock
+                character={props.character}
+                setCharacter={props.setCharacter}
+              />
             </div>
-            <div id="ranged-block"><RangedBlock /></div>
+            <div id="ranged-block">
+              <RangedBlock />
+            </div>
             <div id="items-block">
-              <ItemsBlock character={props.character} setCharacter={props.setCharacter} />
+              <ItemsBlock
+                character={props.character}
+                setCharacter={props.setCharacter}
+              />
             </div>
             <div id="armor-block">
-              <ArmorBlock character={props.character} setCharacter={props.setCharacter} />
+              <ArmorBlock
+                character={props.character}
+                setCharacter={props.setCharacter}
+              />
             </div>
           </SpaceBetween>
         </ContentLayout>

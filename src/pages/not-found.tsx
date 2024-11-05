@@ -11,7 +11,7 @@ import { APP_NAME } from "../common/constants";
 import BaseAppLayout from "../components/base-app-layout";
 import { BlockProps } from "../common/types";
 
-export default function NotFound(props: Omit<BlockProps, 'setCharacter'>) {
+export default function NotFound(props: Omit<BlockProps, "setCharacter">) {
   const onFollow = useOnFollow();
 
   return (

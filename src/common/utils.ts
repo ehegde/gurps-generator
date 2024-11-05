@@ -8,7 +8,7 @@ export abstract class Utils {
   }
 
   static urlSearchParamsToRecord(
-    params: URLSearchParams
+    params: URLSearchParams,
   ): Record<string, string> {
     const record: Record<string, string> = {};
 

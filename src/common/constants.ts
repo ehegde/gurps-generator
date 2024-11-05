@@ -12,13 +12,13 @@ export const DEFAULT_CHARACTER: Character = {
     height: "",
     weight: "",
     age: "",
-    unspentPoints: 0
+    unspentPoints: 0,
   },
   atts: {
     st: 10,
     dx: 10,
     iq: 10,
-    ht: 10
+    ht: 10,
   },
   attMods: {
     dmgMod: 0,
@@ -28,19 +28,19 @@ export const DEFAULT_CHARACTER: Character = {
     speedMod: 0,
     moveMod: 0,
     sizeMod: 0,
-    mageryBonus: 0
+    mageryBonus: 0,
   },
   advantages: [],
   reactions: [],
   armors: [],
   items: [],
   meleeWeapons: [],
-  skills: []
+  skills: [],
 };
 
 export const DX_SKILL_TABLE: {
   [lvlMod: number]: {
-    [diff in SkillDifficulty]: number
+    [diff in SkillDifficulty]: number;
   };
   linear: {
     [diff in SkillDifficulty]: (lvl: number) => number;
@@ -59,13 +59,13 @@ export const DX_SKILL_TABLE: {
     Easy: (lvl: number) => 8 * (lvl - 2),
     Avg: (lvl: number) => 8 * (lvl - 1),
     Hard: (lvl: number) => 8 * lvl,
-    VeryHard: (_: number) => 0 // not applicable
-  }
+    VeryHard: (_: number) => 0, // not applicable
+  },
 };
 
 export const IQ_SKILL_TABLE: {
   [lvlMod: number]: {
-    [diff in SkillDifficulty]: number
+    [diff in SkillDifficulty]: number;
   };
   linear: {
     [diff in SkillDifficulty]: (lvl: number) => number;
@@ -85,15 +85,15 @@ export const IQ_SKILL_TABLE: {
     Easy: (lvl: number) => 2 * lvl,
     Avg: (lvl: number) => 2 * (lvl + 1),
     Hard: (lvl: number) => 2 * (lvl + 2),
-    VeryHard: (lvl: number) => 4 * (lvl + 2)
-  }
+    VeryHard: (lvl: number) => 4 * (lvl + 2),
+  },
 };
 
 export const DAMAGE_TABLE: {
   [st: number]: {
     th: string;
     sw: string;
-  }
+  };
 } = {
   1: { th: "1d-6", sw: "1d-5" },
   2: { th: "1d-6", sw: "1d-5" },
@@ -146,5 +146,5 @@ export const DAMAGE_TABLE: {
   85: { th: "9d+2", sw: "11d+2" },
   90: { th: "10d", sw: "12d" },
   95: { th: "10d+2", sw: "12d+2" },
-  100: { th: "11d", sw: "13d" }
+  100: { th: "11d", sw: "13d" },
 };
