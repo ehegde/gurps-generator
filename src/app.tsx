@@ -29,7 +29,7 @@ export default function App() {
                 />
               }
             />
-            {/* <Route path="*" element={<NotFound character={character} />} /> */}
+            <Route path="test" element={<NotFound character={character} />} />
           </Routes>
         </div>
       </Router>
