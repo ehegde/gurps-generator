@@ -46,48 +46,24 @@ export const DX_SKILL_TABLE: {
     [diff in SkillDifficulty]: (lvl: number) => number;
   };
 } = {
-  [-3]: { Easy: 0, Avg: 0, Hard: 0.5, VeryHard: 0 },
-  [-2]: { Easy: 0, Avg: 0.5, Hard: 1, VeryHard: 0 },
-  [-1]: { Easy: 0.5, Avg: 1, Hard: 2, VeryHard: 0 },
-  [0]: { Easy: 1, Avg: 2, Hard: 4, VeryHard: 0 },
-  [1]: { Easy: 2, Avg: 4, Hard: 8, VeryHard: 0 },
-  [2]: { Easy: 4, Avg: 8, Hard: 16, VeryHard: 0 },
-  [3]: { Easy: 8, Avg: 16, Hard: 24, VeryHard: 0 },
-  [4]: { Easy: 16, Avg: 24, Hard: 32, VeryHard: 0 },
-  [5]: { Easy: 24, Avg: 32, Hard: 40, VeryHard: 0 },
-  linear: {
-    Easy: (lvl: number) => 8 * (lvl - 2),
-    Avg: (lvl: number) => 8 * (lvl - 1),
-    Hard: (lvl: number) => 8 * lvl,
-    VeryHard: (_: number) => 0, // not applicable
-  },
-};
-
-export const IQ_SKILL_TABLE: {
-  [lvlMod: number]: {
-    [diff in SkillDifficulty]: number;
-  };
-  linear: {
-    [diff in SkillDifficulty]: (lvl: number) => number;
-  };
-} = {
-  [-4]: { Easy: 0, Avg: 0, Hard: 0, VeryHard: 0.5 },
-  [-3]: { Easy: 0, Avg: 0, Hard: 0.5, VeryHard: 1 },
-  [-2]: { Easy: 0, Avg: 0.5, Hard: 1, VeryHard: 2 },
-  [-1]: { Easy: 0.5, Avg: 1, Hard: 2, VeryHard: 4 },
+  [-3]: { Easy: 0, Avg: 0, Hard: 0, VeryHard: 1 },
+  [-2]: { Easy: 0, Avg: 0, Hard: 1, VeryHard: 2 },
+  [-1]: { Easy: 0, Avg: 1, Hard: 2, VeryHard: 4 },
   [0]: { Easy: 1, Avg: 2, Hard: 4, VeryHard: 8 },
-  [1]: { Easy: 2, Avg: 4, Hard: 6, VeryHard: 12 },
-  [2]: { Easy: 4, Avg: 6, Hard: 8, VeryHard: 16 },
-  [3]: { Easy: 6, Avg: 8, Hard: 10, VeryHard: 20 },
-  [4]: { Easy: 8, Avg: 10, Hard: 12, VeryHard: 24 },
-  [5]: { Easy: 10, Avg: 12, Hard: 14, VeryHard: 28 },
+  [1]: { Easy: 2, Avg: 4, Hard: 8, VeryHard: 12 },
+  [2]: { Easy: 4, Avg: 8, Hard: 12, VeryHard: 16 },
+  [3]: { Easy: 8, Avg: 12, Hard: 16, VeryHard: 20 },
+  [4]: { Easy: 12, Avg: 16, Hard: 20, VeryHard: 24 },
+  [5]: { Easy: 16, Avg: 20, Hard: 24, VeryHard: 28 },
   linear: {
-    Easy: (lvl: number) => 2 * lvl,
-    Avg: (lvl: number) => 2 * (lvl + 1),
-    Hard: (lvl: number) => 2 * (lvl + 2),
+    Easy: (lvl: number) => 4 * (lvl - 1),
+    Avg: (lvl: number) => 4 * lvl,
+    Hard: (lvl: number) => 4 * (lvl + 1),
     VeryHard: (lvl: number) => 4 * (lvl + 2),
   },
 };
+
+export const IQ_SKILL_TABLE = DX_SKILL_TABLE;
 
 export const DAMAGE_TABLE: {
   [st: number]: {
